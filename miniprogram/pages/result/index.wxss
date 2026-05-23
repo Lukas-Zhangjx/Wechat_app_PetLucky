@@ -1,0 +1,233 @@
+/* ============================================
+   算命结果页样式 — 对齐概念图"星月守护型"卡片风格
+   ============================================ */
+
+.result-wrap {
+  padding: 32rpx 32rpx 40rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+/* ---- 命格主卡（最重要的视觉元素） ---- */
+.fortune-hero {
+  text-align: center;
+  padding: 56rpx 36rpx 48rpx;
+  border-radius: 36rpx;
+  position: relative;
+  overflow: hidden;
+}
+
+/* SSR 金色渐变 */
+.fortune-hero--ssr {
+  background: linear-gradient(160deg, #FFF9E6 0%, #FFF0C0 50%, #FFE090 100%);
+  border: 2rpx solid #F5C842;
+  box-shadow: 0 10rpx 36rpx rgba(245, 166, 35, 0.22);
+}
+/* SR 薰衣草渐变 */
+.fortune-hero--sr {
+  background: linear-gradient(160deg, #FBF5FF 0%, #EEE0FF 50%, #E0CCFF 100%);
+  border: 2rpx solid var(--color-secondary);
+  box-shadow: 0 10rpx 36rpx rgba(184, 158, 212, 0.22);
+}
+/* R 暖奶油 */
+.fortune-hero--r {
+  background: linear-gradient(160deg, #FFF9F0 0%, #FFF0DC 100%);
+  border: 2rpx solid var(--color-border);
+  box-shadow: 0 6rpx 20rpx rgba(180, 120, 60, 0.10);
+}
+
+/* 右上角散落星星装饰 */
+.fortune-hero::before {
+  content: "✦  ✦";
+  position: absolute;
+  top: 24rpx; right: 32rpx;
+  font-size: 24rpx;
+  color: var(--color-primary);
+  opacity: 0.45;
+  letter-spacing: 16rpx;
+}
+.fortune-hero::after {
+  content: "✦";
+  position: absolute;
+  bottom: 28rpx; left: 32rpx;
+  font-size: 20rpx;
+  color: var(--color-secondary);
+  opacity: 0.45;
+}
+
+/* 星星装饰行 */
+.hero-deco {
+  font-size: 24rpx;
+  letter-spacing: 14rpx;
+  opacity: 0.55;
+  margin-bottom: 24rpx;
+  display: block;
+}
+
+/* 稀有度标签行 */
+.rarity-row { margin-bottom: 20rpx; }
+
+/* 本页自用 rarity-badge（覆盖 app.wxss） */
+.rarity-badge {
+  display: inline-block;
+  padding: 8rpx 32rpx;
+  border-radius: 24rpx;
+  font-size: 26rpx;
+  font-weight: bold;
+  letter-spacing: 3rpx;
+}
+.badge--ssr {
+  background: linear-gradient(135deg, #FFD060, #F5A623, #FF8C69);
+  color: #fff;
+  box-shadow: 0 4rpx 16rpx rgba(245, 166, 35, 0.50);
+}
+.badge--sr {
+  background: linear-gradient(135deg, #C8AAED, #B89ED4);
+  color: #fff;
+  box-shadow: 0 4rpx 16rpx rgba(184, 158, 212, 0.50);
+}
+.badge--r {
+  background: var(--color-border);
+  color: var(--color-text-sub);
+}
+
+/* 宠物法师插画 */
+.pet-avatar-img {
+  width: 320rpx;
+  height: 220rpx;
+  display: block;
+  margin: 12rpx auto 20rpx;
+  animation: heroBounce 3s ease-in-out infinite;
+}
+
+/* 命格名称（最大最醒目） */
+.fortune-type {
+  display: block;
+  font-size: 56rpx;
+  font-weight: bold;
+  color: var(--color-text);
+  letter-spacing: 4rpx;
+  margin-bottom: 20rpx;
+}
+
+/* 命格描述 */
+.fortune-desc {
+  display: block;
+  font-size: 28rpx;
+  color: var(--color-text-sub);
+  line-height: 1.9;
+  margin-bottom: 20rpx;
+}
+
+/* 宠物名 */
+.pet-name-label {
+  font-size: 30rpx;
+  color: var(--color-primary);
+  font-weight: bold;
+  letter-spacing: 2rpx;
+}
+
+/* ---- 通用卡片标题 ---- */
+.card-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: var(--color-text);
+  margin-bottom: 24rpx;
+  font-family: var(--font-title);
+}
+
+/* ---- 今日运势信息卡 ---- */
+.info-card { display: flex; flex-direction: column; }
+.fortune-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 0;
+  border-bottom: 2rpx solid var(--color-border-light);
+}
+.fortune-row:last-child { border-bottom: none; }
+.row-label { font-size: 28rpx; color: var(--color-text-sub); }
+.row-value { font-size: 28rpx; color: var(--color-text); font-weight: 500; }
+.color-row { display: flex; align-items: center; gap: 12rpx; }
+.color-dot {
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  border: 3rpx solid var(--color-border);
+}
+
+/* ---- 今日宜忌卡 ---- */
+.do-dont-card {
+  display: flex;
+  gap: 0;
+  padding: 32rpx;
+}
+.do-col, .dont-col { flex: 1; }
+.divider-v {
+  width: 2rpx;
+  background: var(--color-border-light);
+  margin: 0 24rpx;
+}
+.do-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: var(--color-success);
+  margin-bottom: 20rpx;
+}
+.dont-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: var(--color-error);
+  margin-bottom: 20rpx;
+}
+.do-item, .dont-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8rpx;
+  margin-bottom: 14rpx;
+}
+.do-check  { color: var(--color-success); font-weight: bold; flex-shrink: 0; }
+.dont-cross { color: var(--color-error);   font-weight: bold; flex-shrink: 0; }
+.do-text, .dont-text {
+  font-size: 26rpx;
+  color: var(--color-text-sub);
+  line-height: 1.5;
+}
+
+/* ---- 今日灵签卡 ---- */
+.sign-result-card {
+  background: linear-gradient(160deg, #FFF9F0, #FFE9C0);
+  text-align: center;
+}
+.sign-title {
+  display: block;
+  font-size: 30rpx;
+  font-weight: bold;
+  color: var(--color-text);
+  margin-bottom: 20rpx;
+}
+.sign-content {
+  font-size: 30rpx;
+  color: var(--color-text);
+  line-height: 2.0;
+  font-style: italic;
+}
+
+/* ---- 底部操作按钮 ---- */
+.action-btns {
+  display: flex;
+  gap: 20rpx;
+  padding-top: 8rpx;
+  padding-bottom: 40rpx;
+}
+.retry-btn, .share-btn { flex: 1; font-size: 30rpx; }
+
+/* ---- 动画 ---- */
+@keyframes heroBounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%       { transform: translateY(-12rpx) scale(1.04); }
+}

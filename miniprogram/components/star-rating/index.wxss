@@ -1,0 +1,15 @@
+.star-rating {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4rpx;
+}
+
+.star { font-size: 36rpx; }
+.star--empty { color: #E8D5B7; font-size: 30rpx; }
+
+.star-rating--small .star { font-size: 28rpx; }
+.star-rating--small .star--empty { font-size: 24rpx; }
+
+.star-rating--large .star { font-size: 52rpx; }
+.star-rating--large .star--empty { font-size: 44rpx; }

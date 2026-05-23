@@ -1,0 +1,35 @@
+<view class="page-container">
+
+  <!-- 插画 Banner：展示演示图原画 -->
+  <view class="sp-banner">
+    <image class="sp-banner-img" src="/images/banner.png" mode="aspectFill"></image>
+    <!-- 底部渐变遮罩，让图与背景自然融合 -->
+    <view class="sp-banner-fade"></view>
+    <!-- 标题叠在图片上方底部 -->
+    <view class="sp-banner-header">
+      <text class="sp-title">选择宠物类型</text>
+      <text class="sp-sub">选择TA的类型，开始算命吧 📜</text>
+    </view>
+  </view>
+
+  <!-- 宠物卡片网格 -->
+  <view class="pet-grid">
+    <view
+      class="pet-card pet-card--{{item.id}} {{selectedId === item.id ? 'pet-card--selected' : ''}}"
+      wx:for="{{petTypes}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="onSelectPet"
+    >
+      <view class="check-mark" wx:if="{{selectedId === item.id}}">✓</view>
+      <image class="pet-img" src="{{item.img}}" mode="aspectFit"></image>
+      <text class="pet-name">{{item.name}}</text>
+      <text class="pet-method">{{item.method}}</text>
+      <text class="pet-desc">{{item.desc}}</text>
+    </view>
+  </view>
+
+  <view class="hint">
+    <text class="hint-text">🐾 不同宠物有不同的算命方式哦～</text>
+  </view>
+</view>

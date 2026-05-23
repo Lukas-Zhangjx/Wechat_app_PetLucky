@@ -1,0 +1,138 @@
+.loading-talisman {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(255, 248, 238, 0.96);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.talisman-wrapper {
+  position: relative;
+  width: 280rpx;
+  height: 380rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: sway 3s ease-in-out infinite;
+}
+
+/* 黄纸主体 */
+.talisman-paper {
+  width: 160rpx;
+  min-height: 340rpx;
+  background: linear-gradient(180deg, #F2D060 0%, #E8C030 40%, #F0CA50 100%);
+  border-radius: 8rpx 8rpx 12rpx 12rpx;
+  border: 3rpx solid #A07820;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16rpx 0;
+  box-shadow:
+    inset 0 0 20rpx rgba(160, 120, 32, 0.15),
+    0 8rpx 32rpx rgba(100, 60, 0, 0.25),
+    4rpx 4rpx 0 #C09020;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 纸张纹理横线 */
+.talisman-paper::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 12rpx; right: 12rpx; bottom: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent,
+    transparent 48rpx,
+    rgba(160, 120, 32, 0.12) 48rpx,
+    rgba(160, 120, 32, 0.12) 50rpx
+  );
+  pointer-events: none;
+}
+
+/* 顶部红色折痕 */
+.talisman-paper::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 12rpx;
+  background: #CC3300;
+  border-radius: 8rpx 8rpx 0 0;
+}
+
+.talisman-seal {
+  font-size: 32rpx;
+  color: #CC3300;
+  font-weight: bold;
+  z-index: 1;
+}
+.top-seal { margin-top: 20rpx; }
+.bottom-seal { margin-bottom: 8rpx; font-size: 24rpx; }
+
+.talisman-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rpx;
+  z-index: 1;
+}
+
+.talisman-char {
+  font-size: 38rpx;
+  font-weight: bold;
+  color: #5C0000;
+  font-family: "华文行楷", "STKaiti", cursive;
+  line-height: 1.3;
+  opacity: 0;
+  animation: inkDrop 0.4s ease forwards;
+}
+.char-1 { animation-delay: 0.1s; }
+.char-2 { animation-delay: 0.35s; }
+.char-3 { animation-delay: 0.6s; }
+.char-4 { animation-delay: 0.85s; }
+.char-5 { animation-delay: 1.1s; }
+
+/* 浮动装饰 */
+.float-deco {
+  position: absolute;
+  font-size: 32rpx;
+  animation: floatAround 4s ease-in-out infinite;
+}
+.deco-1 { top: 0; left: 10rpx; animation-delay: 0s; }
+.deco-2 { bottom: 20rpx; right: 10rpx; animation-delay: -1.3s; }
+.deco-3 { top: 40rpx; right: 0; animation-delay: -2.6s; }
+
+.loading-text {
+  margin-top: 56rpx;
+  font-size: 30rpx;
+  color: #8B6F5E;
+  text-align: center;
+  padding: 0 60rpx;
+  line-height: 1.6;
+  animation: fadeInOut 2s ease-in-out infinite;
+}
+
+/* 动画 */
+@keyframes sway {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+
+@keyframes inkDrop {
+  from { opacity: 0; transform: translateY(-8rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes floatAround {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.7; }
+  50% { transform: translateY(-20rpx) scale(1.1); opacity: 1; }
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}

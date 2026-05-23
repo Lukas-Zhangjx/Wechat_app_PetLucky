@@ -1,0 +1,69 @@
+<scroll-view class="page-container" scroll-y>
+  <view class="result-wrap" wx:if="{{result}}">
+
+    <!-- 命格标题卡：背景色随稀有度变化 -->
+    <view class="fortune-hero {{heroClass}}">
+      <view class="hero-deco">✨ 🌙 ⭐ 🌙 ✨</view>
+      <view class="rarity-row">
+        <text class="rarity-badge {{rarityClass}}">{{result.rarity}}</text>
+      </view>
+      <!-- 法师宠物插画（目前固定用柴犬，后续可按宠物类型切换） -->
+      <image class="pet-avatar-img" src="/images/wizard_dog.png" mode="aspectFit"></image>
+      <text class="fortune-type">{{result.fortune_type}}</text>
+      <text class="fortune-desc">{{result.description}}</text>
+      <text class="pet-name-label">✨ {{petName}} ✨</text>
+    </view>
+
+    <!-- 今日运势 -->
+    <view class="card info-card">
+      <text class="card-title">📊 今日运势</text>
+      <view class="fortune-row">
+        <text class="row-label">今日运势</text>
+        <star-rating value="{{result.daily_fortune}}" size="normal"></star-rating>
+      </view>
+      <view class="fortune-row">
+        <text class="row-label">🍖 幸运零食</text>
+        <text class="row-value">{{result.lucky_snack}}</text>
+      </view>
+      <view class="fortune-row">
+        <text class="row-label">🎨 幸运颜色</text>
+        <view class="color-row">
+          <view class="color-dot" style="background:{{result.lucky_color_hex}}"></view>
+          <text class="row-value">{{result.lucky_color}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 今日宜/忌 -->
+    <view class="card do-dont-card">
+      <view class="do-col">
+        <text class="do-title">✅ 今日宜</text>
+        <view wx:for="{{result.do_list}}" wx:key="*this" class="do-item">
+          <text class="do-check">✓</text>
+          <text class="do-text">{{item}}</text>
+        </view>
+      </view>
+      <view class="divider-v"></view>
+      <view class="dont-col">
+        <text class="dont-title">❌ 今日忌</text>
+        <view wx:for="{{result.dont_list}}" wx:key="*this" class="dont-item">
+          <text class="dont-cross">✗</text>
+          <text class="dont-text">{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 今日灵签 -->
+    <view class="card sign-result-card">
+      <text class="sign-title">📜 今日灵签</text>
+      <text class="sign-content">{{result.fortune_sign}}</text>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="action-btns safe-bottom">
+      <button class="btn-secondary retry-btn" bindtap="onRetry">再测一次</button>
+      <button class="btn-primary share-btn" bindtap="onShareResult">✨ 分享结果</button>
+    </view>
+
+  </view>
+</scroll-view>

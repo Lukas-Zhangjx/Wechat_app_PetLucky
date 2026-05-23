@@ -1,0 +1,75 @@
+.today-section {
+  padding: 48rpx 40rpx 32rpx;
+  text-align: center;
+  background: linear-gradient(160deg, #FFF8EE 0%, #F3E6FF 100%);
+}
+.moon-deco { font-size: 32rpx; letter-spacing: 16rpx; opacity: 0.6; margin-bottom: 16rpx; }
+.today-label {
+  display: block;
+  font-size: 44rpx;
+  font-weight: bold;
+  color: var(--color-text);
+  font-family: var(--font-title);
+  margin-bottom: 32rpx;
+}
+
+.sign-display {
+  background: var(--color-card-bg);
+  border-radius: 28rpx;
+  border: 2rpx solid var(--color-secondary);
+  padding: 40rpx 32rpx;
+  box-shadow: 0 8rpx 32rpx rgba(200, 162, 212, 0.2);
+  min-height: 200rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16rpx;
+}
+.sign-display--shake { animation: shake 0.6s ease; }
+.sign-scroll-icon { font-size: 60rpx; }
+.sign-main-text { font-size: 32rpx; color: var(--color-text); line-height: 1.8; text-align: center; }
+.sign-tap-hint { font-size: 22rpx; color: var(--color-text-sub); margin-top: 8rpx; }
+
+.sign-meta { margin-top: 20rpx; }
+.sign-meta-text { font-size: 24rpx; color: var(--color-text-sub); }
+
+.list-section { padding: 32rpx 40rpx 0; }
+.list-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: var(--color-text);
+  margin-bottom: 20rpx;
+}
+
+.sign-item {
+  padding: 24rpx 20rpx;
+  border-bottom: 2rpx solid var(--color-border);
+  display: flex;
+  align-items: flex-start;
+  gap: 16rpx;
+}
+.sign-item--today {
+  background: linear-gradient(90deg, #FFF3E0, transparent);
+  border-radius: 16rpx;
+  border-color: var(--color-primary);
+}
+.sign-num-wrap { display: flex; align-items: center; gap: 8rpx; flex-shrink: 0; }
+.sign-num { font-size: 22rpx; color: var(--color-text-sub); }
+.today-tag {
+  font-size: 20rpx;
+  color: #fff;
+  background: var(--color-primary);
+  padding: 2rpx 10rpx;
+  border-radius: 10rpx;
+}
+.sign-item-text { font-size: 26rpx; color: var(--color-text); line-height: 1.7; flex: 1; }
+
+@keyframes shake {
+  0%, 100% { transform: rotate(0); }
+  20% { transform: rotate(-3deg) scale(1.02); }
+  40% { transform: rotate(3deg) scale(1.04); }
+  60% { transform: rotate(-2deg) scale(1.02); }
+  80% { transform: rotate(2deg); }
+}

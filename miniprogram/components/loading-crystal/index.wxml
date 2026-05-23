@@ -1,0 +1,21 @@
+<view class="loading-talisman" wx:if="{{visible}}">
+  <view class="talisman-wrapper">
+    <!-- 黄纸符咒 -->
+    <view class="talisman-paper">
+      <view class="talisman-seal top-seal">☯</view>
+      <view class="talisman-body">
+        <text class="talisman-char char-1">符</text>
+        <text class="talisman-char char-2">命</text>
+        <text class="talisman-char char-3">运</text>
+        <text class="talisman-char char-4">算</text>
+        <text class="talisman-char char-5">定</text>
+      </view>
+      <view class="talisman-seal bottom-seal">✦</view>
+    </view>
+    <!-- 装饰元素 -->
+    <text class="float-deco deco-1">✨</text>
+    <text class="float-deco deco-2">⭐</text>
+    <text class="float-deco deco-3">🌙</text>
+  </view>
+  <text class="loading-text">{{currentText}}</text>
+</view>

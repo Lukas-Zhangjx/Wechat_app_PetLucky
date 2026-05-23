@@ -1,0 +1,35 @@
+<view class="page-container">
+  <!-- 今日签 -->
+  <view class="today-section">
+    <view class="moon-deco">🌙 ✨ 🌙</view>
+    <text class="today-label">今日灵签</text>
+
+    <view class="sign-display {{shakeAnim ? 'sign-display--shake' : ''}}" bindtap="onShake">
+      <text class="sign-scroll-icon">📜</text>
+      <text class="sign-main-text">{{todaySign}}</text>
+      <text class="sign-tap-hint">轻触签文感受能量</text>
+    </view>
+
+    <view class="sign-meta">
+      <text class="sign-meta-text">🌙 今日第 {{todayIndex + 1}} 签 · 每日更新</text>
+    </view>
+  </view>
+
+  <!-- 所有签文列表 -->
+  <view class="list-section">
+    <text class="list-title">✨ 全部灵签</text>
+    <scroll-view scroll-y style="height:60vh;">
+      <view
+        class="sign-item {{item.isToday ? 'sign-item--today' : ''}}"
+        wx:for="{{allSigns}}"
+        wx:key="index"
+      >
+        <view class="sign-num-wrap">
+          <text class="sign-num">第{{item.index + 1}}签</text>
+          <text class="today-tag" wx:if="{{item.isToday}}">今日</text>
+        </view>
+        <text class="sign-item-text">{{item.text}}</text>
+      </view>
+    </scroll-view>
+  </view>
+</view>

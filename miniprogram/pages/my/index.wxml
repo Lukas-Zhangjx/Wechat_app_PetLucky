@@ -1,0 +1,73 @@
+<view class="page-container">
+  <!-- 顶部信息 -->
+  <view class="top-bar">
+    <view class="user-section">
+      <text class="user-avatar">🐾</text>
+      <view>
+        <text class="user-label">毛孩子的命理档案</text>
+        <text class="user-sub">历史算命记录</text>
+      </view>
+    </view>
+    <view class="usage-badge">
+      <text class="usage-label">今日剩余</text>
+      <text class="usage-num">{{remaining}}</text>
+      <text class="usage-unit">次</text>
+    </view>
+  </view>
+
+  <!-- 有记录 -->
+  <scroll-view scroll-y style="height:80vh;" wx:if="{{records.length > 0}}">
+    <view class="records-list">
+      <view
+        class="record-item card"
+        wx:for="{{records}}"
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="onToggleExpand"
+      >
+        <!-- 简洁行 -->
+        <view class="record-row">
+          <text class="record-emoji">{{item.petEmoji}}</text>
+          <view class="record-info">
+            <text class="record-name">{{item.petName}}</text>
+            <view class="record-meta-row">
+              <text class="rarity-badge rarity-badge--{{item.rarity === 'SSR' ? 'ssr' : item.rarity === 'SR' ? 'sr' : 'r'}}">{{item.rarity}}</text>
+              <text class="record-fortune-type">{{item.fortuneType}}</text>
+            </view>
+          </view>
+          <view class="record-right">
+            <text class="record-date">{{item.dateLabel}}</text>
+            <text class="expand-arrow">{{expandedId === item.id ? '▲' : '▼'}}</text>
+          </view>
+        </view>
+
+        <!-- 展开详情 -->
+        <view class="record-detail" wx:if="{{expandedId === item.id}}">
+          <view class="divider"></view>
+          <text class="detail-desc">{{item.data.description}}</text>
+          <view class="detail-fortune-row">
+            <text class="detail-label">今日运势</text>
+            <star-rating value="{{item.data.daily_fortune}}" size="small"></star-rating>
+          </view>
+          <view class="detail-fortune-row">
+            <text class="detail-label">🍖 {{item.data.lucky_snack}}</text>
+            <view class="color-row">
+              <view class="color-dot" style="background:{{item.data.lucky_color_hex}}"></view>
+              <text class="detail-label">{{item.data.lucky_color}}</text>
+            </view>
+          </view>
+          <text class="detail-sign">📜 {{item.data.fortune_sign}}</text>
+        </view>
+      </view>
+    </view>
+    <view style="height:40rpx;"></view>
+  </scroll-view>
+
+  <!-- 无记录 -->
+  <view class="empty-state" wx:else>
+    <text class="empty-emoji">📜</text>
+    <text class="empty-title">还没有算命记录</text>
+    <text class="empty-sub">去给毛孩子算一卦吧～</text>
+    <button class="btn-primary go-btn" bindtap="onGoFortune">开始算命 ✨</button>
+  </view>
+</view>

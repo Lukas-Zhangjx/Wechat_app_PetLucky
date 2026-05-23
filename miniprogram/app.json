@@ -1,0 +1,31 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/select-pet/index",
+    "pages/upload-photo/index",
+    "pages/result/index",
+    "pages/fortune-sign/index",
+    "pages/my/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#FFF8EE",
+    "navigationBarTitleText": "爪爪运",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#FFF8EE"
+  },
+  "tabBar": {
+    "color": "#8B6F5E",
+    "selectedColor": "#F5A623",
+    "backgroundColor": "#FFF8EE",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/index/index", "text": "首页" },
+      { "pagePath": "pages/fortune-sign/index", "text": "灵签" },
+      { "pagePath": "pages/my/index", "text": "我的" }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "darkmode": false
+}

@@ -1,0 +1,149 @@
+/* ============================================
+   全局样式 & CSS 变量
+   概念图色系：暖奶油底 + 金琥珀主色 + 薰衣草辅色
+   ============================================ */
+page {
+  /* 背景 */
+  --color-bg: #FFF5E4;
+  --color-card-bg: #FFFFFF;
+  --color-card-bg2: #FFF9F0;
+
+  /* 主色 / 辅色 */
+  --color-primary: #F5A623;
+  --color-primary-light: #FFE4A8;
+  --color-secondary: #B89ED4;
+  --color-secondary-light: #EDE4FF;
+  --color-accent: #FF8C69;
+
+  /* 文字 */
+  --color-text: #3D2C1E;
+  --color-text-sub: #9B7A6A;
+  --color-text-light: #C4A882;
+
+  /* 边框 & 分割 */
+  --color-border: #EDD9BE;
+  --color-border-light: #F5ECD8;
+
+  /* 状态 */
+  --color-success: #6DBF6A;
+  --color-error: #F56565;
+
+  /* 稀有度 */
+  --color-ssr: #F5A623;
+  --color-sr: #B89ED4;
+  --color-r: #B0957A;
+
+  /* 宠物卡片背景 */
+  --color-pet-dog: #FFF3E0;
+  --color-pet-cat: #F5EEFF;
+  --color-pet-rabbit: #EDFFF4;
+  --color-pet-small: #FFFDE4;
+
+  /* 字体变量：全局使用站酷快乐体，降级用苹方 */
+  --font-title: 'KuaiLe', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+  --font-body:  'KuaiLe', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-size: 28rpx;
+  line-height: 1.6;
+  font-family: var(--font-title);
+}
+
+/* ---- 通用卡片 ---- */
+.card {
+  background: var(--color-card-bg);
+  border-radius: 32rpx;
+  padding: 36rpx;
+  /* 暖色调阴影，比黑色阴影更贴近概念图 */
+  box-shadow: 0 6rpx 24rpx rgba(180, 120, 60, 0.10);
+  border: 2rpx solid var(--color-border-light);
+}
+
+/* ---- 主按钮 ---- */
+.btn-primary {
+  background: linear-gradient(135deg, #FFBE45, #F5A623);
+  color: #fff;
+  border-radius: 56rpx;
+  padding: 28rpx 40rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  text-align: center;
+  border: none;
+  box-shadow: 0 8rpx 24rpx rgba(245, 166, 35, 0.45);
+  letter-spacing: 2rpx;
+  font-family: var(--font-title);
+}
+.btn-primary::after { border: none; }
+
+/* ---- 次要按钮 ---- */
+.btn-secondary {
+  background: var(--color-card-bg);
+  color: var(--color-primary);
+  border-radius: 56rpx;
+  padding: 28rpx 60rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  text-align: center;
+  border: 2rpx solid var(--color-primary);
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.06);
+}
+.btn-secondary::after { border: none; }
+
+/* ---- 区块标题 ---- */
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: var(--color-text);
+  margin-bottom: 20rpx;
+  font-family: var(--font-title);
+}
+
+/* ---- 稀有度标签 ---- */
+.rarity-badge {
+  display: inline-block;
+  padding: 8rpx 28rpx;
+  border-radius: 24rpx;
+  font-size: 26rpx;
+  font-weight: bold;
+  letter-spacing: 3rpx;
+}
+.rarity-badge--ssr {
+  background: linear-gradient(135deg, #FFD060, #F5A623, #FF8C69);
+  color: #fff;
+  box-shadow: 0 4rpx 16rpx rgba(245, 166, 35, 0.5);
+}
+.rarity-badge--sr {
+  background: linear-gradient(135deg, #C8AAED, #B89ED4);
+  color: #fff;
+  box-shadow: 0 4rpx 16rpx rgba(184, 158, 212, 0.5);
+}
+.rarity-badge--r {
+  background: var(--color-border);
+  color: var(--color-text-sub);
+}
+
+/* ---- 页面容器 ---- */
+.page-container {
+  min-height: 100vh;
+  background: var(--color-bg);
+  padding-bottom: 40rpx;
+}
+
+/* ---- 安全区底部 ---- */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* ---- 分割线 ---- */
+.divider {
+  height: 2rpx;
+  background: var(--color-border-light);
+  margin: 24rpx 0;
+}
+
+/* ---- 散落星星装饰（用 before/after 伪元素在背景层） ---- */
+.star-bg {
+  position: relative;
+  overflow: hidden;
+}

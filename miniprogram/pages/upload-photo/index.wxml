@@ -1,0 +1,183 @@
+<view class="page-container">
+  <loading-crystal visible="{{loading}}" petType="{{petType.id}}"></loading-crystal>
+
+  <scroll-view scroll-y style="height:100vh;">
+
+    <!-- ===== 装饰性标题横幅 ===== -->
+    <view class="upload-header">
+      <!-- 背景散点装饰 -->
+      <text class="hd hd-1">✦</text>
+      <text class="hd hd-2">✿</text>
+      <text class="hd hd-3">✦</text>
+      <text class="hd hd-4">✿</text>
+      <text class="hd hd-5">✦</text>
+
+      <view class="header-banner">
+        <text class="banner-title">上传{{petType.name}}{{petType.uploadHint}}</text>
+      </view>
+      <text class="header-sub">看看TA隐藏的命格吧！</text>
+
+      <view class="remaining-badge" wx:if="{{remaining > 0}}">
+        今日剩余 {{remaining}} 次
+      </view>
+    </view>
+
+    <!-- ===== 上传区域 ===== -->
+    <view class="section">
+      <!-- 已选照片 -->
+      <block wx:if="{{imagePreview}}">
+        <view class="upload-preview-wrap">
+          <image class="preview-img" src="{{imagePreview}}" mode="aspectFill"></image>
+          <view class="remove-btn" catchtap="onRemovePhoto">✕</view>
+          <view class="reselect-btn" bindtap="onChoosePhoto">🔄 重新选择</view>
+        </view>
+      </block>
+
+      <!-- 未选照片：示例图 + 相机按钮 -->
+      <block wx:else>
+        <view class="upload-example-wrap" bindtap="onChoosePhoto">
+          <!-- 有示例图就显示 -->
+          <image
+            wx:if="{{petType.exampleImg}}"
+            class="example-bg-img"
+            src="{{petType.exampleImg}}"
+            mode="aspectFill"
+          ></image>
+          <!-- 无示例图时用 emoji 占位 -->
+          <view wx:else class="example-placeholder">
+            <text class="placeholder-emoji">{{petType.emoji}}</text>
+          </view>
+          <!-- 相机圆形按钮，叠在图片上 -->
+          <view class="camera-circle">📷</view>
+        </view>
+        <text class="upload-hint-text">点击拍摄{{petType.uploadHint}}</text>
+        <text class="upload-sub-text">或从相册选择</text>
+      </block>
+    </view>
+
+    <!-- ===== 拍摄小贴士（含示例照片） ===== -->
+    <view class="section" wx:if="{{petType.tips}}">
+      <text class="section-title">📋 拍摄小贴士</text>
+      <view class="tips-row">
+
+        <!-- 正确示范 -->
+        <view class="tips-col tips-col--good">
+          <text class="tips-col-title good-title">✓ 正确示范</text>
+          <image
+            wx:if="{{petType.exampleImg}}"
+            class="tips-good-photo"
+            src="{{petType.exampleImg}}"
+            mode="aspectFill"
+          ></image>
+          <view wx:for="{{petType.tips.dos}}" wx:key="*this" class="tip-item">
+            <text class="tip-check">✓</text>
+            <text class="tip-text">{{item}}</text>
+          </view>
+        </view>
+
+        <!-- 错误示范 -->
+        <view class="tips-col tips-col--bad">
+          <text class="tips-col-title bad-title">✗ 错误示范</text>
+
+          <!-- 有实例图：2×n 小图格 -->
+          <view wx:if="{{petType.tips.badImgs}}" class="bad-grid">
+            <view
+              wx:for="{{petType.tips.badImgs}}"
+              wx:key="label"
+              class="bad-item"
+            >
+              <image class="bad-photo" src="{{item.img}}" mode="aspectFill"></image>
+              <text class="bad-label">✗ {{item.label}}</text>
+            </view>
+          </view>
+
+          <!-- 无实例图：文字列表 -->
+          <view wx:else>
+            <view wx:for="{{petType.tips.donts}}" wx:key="*this" class="tip-item">
+              <text class="tip-cross">✗</text>
+              <text class="tip-text">{{item}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 底部小提示行 -->
+      <view class="tips-bottom" wx:if="{{petType.cleanHint}}">
+        <image class="hint-pet-img" src="{{petType.img}}" mode="aspectFit"></image>
+        <text class="hint-bottom-text">小提示：{{petType.cleanHint}}</text>
+      </view>
+    </view>
+
+    <!-- ===== 宠物信息表单 ===== -->
+    <view class="section">
+      <text class="section-title">🐾 宠物信息</text>
+      <view class="card form-card">
+        <!-- 名字 -->
+        <view class="form-row">
+          <text class="form-label">宠物名字 <text class="required">*</text></text>
+          <input
+            class="form-input"
+            placeholder="给TA取了什么名字？"
+            placeholder-class="input-placeholder"
+            value="{{petName}}"
+            bindinput="onNameInput"
+            maxlength="20"
+          />
+        </view>
+        <view class="divider"></view>
+
+        <!-- 性别 -->
+        <view class="form-row">
+          <text class="form-label">性别 <text class="required">*</text></text>
+          <view class="gender-btns">
+            <view
+              class="gender-btn {{petGender === 'male' ? 'gender-btn--active' : ''}}"
+              data-gender="male"
+              bindtap="onGenderSelect"
+            >♂ 公</view>
+            <view
+              class="gender-btn {{petGender === 'female' ? 'gender-btn--active' : ''}}"
+              data-gender="female"
+              bindtap="onGenderSelect"
+            >♀ 母</view>
+          </view>
+        </view>
+        <view class="divider"></view>
+
+        <!-- 品种 -->
+        <view class="form-row">
+          <text class="form-label">品种 <text class="recommend">⭐推荐</text></text>
+          <input
+            class="form-input"
+            placeholder="品种越精确，毒舌越到位～"
+            placeholder-class="input-placeholder"
+            value="{{petBreed}}"
+            bindinput="onBreedInput"
+            maxlength="30"
+          />
+        </view>
+        <view class="divider"></view>
+
+        <!-- 年龄 -->
+        <view class="form-row">
+          <text class="form-label">年龄 <text class="recommend">⭐推荐</text></text>
+          <picker mode="selector" range="{{ageOptions}}" value="{{ageIndex}}" bindchange="onAgeChange">
+            <view class="picker-val">{{ageOptions[ageIndex]}} <text class="picker-arrow">›</text></view>
+          </picker>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== 提交按钮 ===== -->
+    <view class="submit-wrap safe-bottom">
+      <button
+        class="{{submitDisabled ? 'btn-disabled' : 'btn-primary'}} submit-btn"
+        bindtap="onSubmit"
+        disabled="{{submitDisabled}}"
+      >
+        开始算命 📜
+      </button>
+    </view>
+
+  </scroll-view>
+</view>

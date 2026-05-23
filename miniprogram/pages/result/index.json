@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "算命结果",
+  "usingComponents": {
+    "star-rating": "/components/star-rating/index"
+  }
+}

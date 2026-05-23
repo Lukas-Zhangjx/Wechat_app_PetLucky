@@ -1,0 +1,165 @@
+/* ============================================
+   选择宠物页样式 — 插画 Banner + 卡片网格
+   ============================================ */
+
+/* ---- 插画 Banner ---- */
+.sp-banner {
+  position: relative;
+  width: 100%;
+  height: 340rpx;
+  overflow: hidden;
+  background: linear-gradient(180deg, #FFF5E4 0%, #FFE9C0 100%);
+}
+.sp-banner-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  /* 四周自然羽化，和背景融合 */
+  -webkit-mask-image: radial-gradient(ellipse 92% 94% at 50% 46%, black 30%, transparent 78%);
+  mask-image:         radial-gradient(ellipse 92% 94% at 50% 46%, black 30%, transparent 78%);
+}
+/* 底部额外渐变，保证下方内容过渡自然 */
+.sp-banner-fade {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 120rpx;
+  background: linear-gradient(to bottom, transparent, var(--color-bg));
+  pointer-events: none;
+}
+/* 标题叠在图片底部 */
+.sp-banner-header {
+  position: absolute;
+  bottom: 12rpx;
+  left: 0; right: 0;
+  text-align: center;
+  padding: 0 40rpx;
+}
+.sp-title {
+  display: block;
+  font-size: 44rpx;
+  font-weight: bold;
+  color: var(--color-text);
+  letter-spacing: 4rpx;
+  font-family: var(--font-title);
+  text-shadow: 0 2rpx 8rpx rgba(255, 245, 228, 0.9);
+}
+.sp-sub {
+  display: block;
+  font-size: 26rpx;
+  color: var(--color-text-sub);
+  margin-top: 8rpx;
+  font-family: var(--font-title);
+  text-shadow: 0 1rpx 4rpx rgba(255, 245, 228, 0.9);
+}
+
+/* ---- 宠物卡片网格 ---- */
+.pet-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22rpx;
+  padding: 8rpx 28rpx 28rpx;
+}
+
+/* ---- 单张宠物卡片 ---- */
+.pet-card {
+  border-radius: 32rpx;
+  padding: 32rpx 16rpx 28rpx;
+  text-align: center;
+  border: 3rpx solid var(--color-border-light);
+  box-shadow: 0 6rpx 20rpx rgba(180, 120, 60, 0.10);
+  position: relative;
+  transition: transform 0.15s, box-shadow 0.15s;
+  overflow: hidden;
+}
+.pet-card:active {
+  transform: scale(0.96);
+}
+
+/* 四种宠物各自的暖色背景 */
+.pet-card--dog    { background: var(--color-pet-dog); }
+.pet-card--cat    { background: var(--color-pet-cat); }
+.pet-card--rabbit { background: var(--color-pet-rabbit); }
+.pet-card--small  { background: var(--color-pet-small); }
+
+/* 选中态：加金色边框 + 阴影 */
+.pet-card--selected {
+  border-color: var(--color-primary);
+  box-shadow: 0 8rpx 28rpx rgba(245, 166, 35, 0.30);
+}
+
+/* 右上角勾 */
+.check-mark {
+  position: absolute;
+  top: 16rpx;
+  right: 16rpx;
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 28rpx;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 12rpx rgba(245, 166, 35, 0.45);
+  z-index: 2;
+}
+
+/* 宠物插画图片 — 居中正方形，统一样式 */
+.pet-img {
+  width: 172rpx;
+  height: 172rpx;
+  display: block;
+  margin: 0 auto 16rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 14rpx rgba(160, 100, 40, 0.14);
+  animation: emojiFloat 3s ease-in-out infinite;
+}
+.pet-card:nth-child(2) .pet-img { animation-delay: 0.4s; }
+.pet-card:nth-child(3) .pet-img { animation-delay: 0.8s; }
+.pet-card:nth-child(4) .pet-img { animation-delay: 1.2s; }
+
+.pet-name {
+  display: block;
+  font-size: 34rpx;
+  font-weight: bold;
+  color: var(--color-text);
+  letter-spacing: 2rpx;
+  font-family: var(--font-title);
+}
+.pet-method {
+  display: inline-block;
+  font-size: 22rpx;
+  color: var(--color-primary);
+  font-weight: 600;
+  background: var(--color-primary-light);
+  border-radius: 20rpx;
+  padding: 4rpx 16rpx;
+  margin-top: 12rpx;
+}
+.pet-desc {
+  display: block;
+  font-size: 22rpx;
+  color: var(--color-text-sub);
+  margin-top: 12rpx;
+  line-height: 1.5;
+  padding: 0 12rpx;
+}
+
+/* ---- 底部提示 ---- */
+.hint {
+  text-align: center;
+  padding: 8rpx 40rpx 56rpx;
+}
+.hint-text {
+  font-size: 26rpx;
+  color: var(--color-text-sub);
+  letter-spacing: 1rpx;
+}
+
+/* ---- 动画 ---- */
+@keyframes emojiFloat {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8rpx); }
+}
