@@ -181,6 +181,9 @@ Page({
       saveFortuneRecord({ petType: petType.id, petName, data: result });
 
       const app = getApp();
+      // 优先用档案照片，其次用本页上传的照片，实在没有才留空
+      const petInfo = app.globalData.petInfo || {};
+      const resultPhoto = petInfo.petPhoto || this.data.imagePreview || '';
       app.globalData.lastResult = {
         result,
         petType: petType.id,
@@ -188,7 +191,7 @@ Page({
         petEmoji: petType.emoji,
         petImg: petType.img,
         mode: fortuneMode,
-        userPhoto: this.data.imagePreview,   // 用户上传的真实照片
+        userPhoto: resultPhoto,
       };
 
       wx.redirectTo({ url: '/pages/result/index' });

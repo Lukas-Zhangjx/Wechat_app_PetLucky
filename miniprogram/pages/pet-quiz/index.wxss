@@ -173,6 +173,12 @@
   gap: 20rpx;
   margin-top: 12rpx;
 }
+/* 完成页按钮缩小横向 padding，防止文字换行 */
+.finish-btns .btn-secondary {
+  padding: 28rpx 32rpx;
+  font-size: 30rpx;
+  white-space: nowrap;
+}
 
 @keyframes bgFloat {
   0%, 100% { transform: translateY(0); }
