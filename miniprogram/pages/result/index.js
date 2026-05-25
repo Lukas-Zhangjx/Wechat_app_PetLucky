@@ -82,15 +82,14 @@ Page({
     wx.navigateBack();
   },
 
-  onShareResult() {
-    wx.showToast({ title: '长按截图即可分享 📸', icon: 'none', duration: 2500 });
-  },
-
   onShareAppMessage() {
-    const { result, petName } = this.data;
+    const { result, petName, petEmoji } = this.data;
+    const rarity = result?.rarity || '';
+    const fortuneType = result?.fortune_type || '神秘命格';
     return {
-      title: `${petName}是【${result?.fortune_type}】命格！快来测测你的毛孩子～`,
+      title: `${petEmoji}${petName} 测出了${rarity ? '【' + rarity + '】' : ''}命格：${fortuneType}！快来测测你的毛孩子～`,
       path: '/pages/index/index',
+      imageUrl: '/images/banner.png',  // 分享卡片封面图
     };
   },
 });
