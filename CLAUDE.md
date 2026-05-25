@@ -89,25 +89,46 @@ PetLucky/
 
 ### 原则
 
-**快速迭代，持续推送。** 当前阶段在 `main` 上直接开发和推送，随时保持远端与本地同步。
+**每个功能建一个分支，边开发边往该分支推送，测试通过后合并回 main。**
 
 ```
-main   ← 唯一工作分支，开发即推送
+main                  ← 稳定版本，只接受合并，不直接 commit
+  ├── feature/xxx     ← 新功能（开发期间持续 push 到此分支）
+  ├── fix/xxx         ← Bug 修复
+  └── refactor/xxx    ← 重构
 ```
 
-每完成一个功能点或修复一个 Bug，立即 commit + push，**不要攒**。这样做的好处：
+开发期间随时 commit + push 到功能分支，**不要攒**：
 - 随时可回滚到任意一个可用状态
 - 出问题能精确定位是哪次改动引入的
-- 不存在"本地有大量未提交改动"的风险
-
-**什么时候建分支：** 如果某个功能改动极大、可能导致主流程不可用（如重写整个支付流程），才从 main 切出分支，完成后合并回来。日常功能迭代不需要。
+- 分支上能看到这个功能完整的开发历史
 
 ### 标准流程
 
+**开发新功能：**
 ```bash
-# 每次开发完一个功能 / 修一个 Bug：
+git checkout main && git pull          # 从最新 main 切出
+git checkout -b feature/功能名         # 新建功能分支
+# ... 开发中，随时 commit + push 到功能分支 ...
 git add <相关文件>
 git commit -m "feat(scope): 做了什么"
+git push -u origin feature/功能名      # 第一次推用 -u，后续直接 git push
+
+# 功能开发完、测试通过后：
+git checkout main
+git merge feature/功能名 --no-ff       # 合并回 main（保留分支记录）
+git branch -d feature/功能名           # 删除本地已合并分支
+git push
+```
+
+**修复 Bug：**
+```bash
+git checkout main && git pull
+git checkout -b fix/问题描述
+# ... 修复、提交 ...
+git checkout main
+git merge fix/问题描述 --no-ff
+git branch -d fix/问题描述
 git push
 ```
 
