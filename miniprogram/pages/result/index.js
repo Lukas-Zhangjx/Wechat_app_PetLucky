@@ -138,8 +138,7 @@ Page({
         grad.addColorStop(0, c1);
         grad.addColorStop(1, c2);
         ctx.fillStyle = grad;
-        ctx.roundRect ? ctx.roundRect(0, 0, W, H, 32) : ctx.fillRect(0, 0, W, H);
-        ctx.fill();
+        ctx.fillRect(0, 0, W, H);
 
         // ── 顶部 App 名 ──
         ctx.fillStyle = '#8B6030';
