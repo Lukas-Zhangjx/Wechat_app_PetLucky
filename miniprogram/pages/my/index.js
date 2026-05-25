@@ -88,6 +88,9 @@ Page({
     this.setData({ showPetForm: false });
   },
 
+  // 阻止 modal 内部点击冒泡到遮罩层
+  noop() {},
+
   // 表单字段处理
   onFormNameInput(e)    { this.setData({ formName: e.detail.value }); },
   onFormGenderSelect(e) { this.setData({ formGender: e.currentTarget.dataset.gender }); },

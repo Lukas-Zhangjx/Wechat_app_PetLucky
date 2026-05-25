@@ -125,7 +125,7 @@
 
   <!-- ===== 添加/编辑宠物 底部弹窗 ===== -->
   <view class="modal-overlay" wx:if="{{showPetForm}}" bindtap="onClosePetForm">
-    <view class="modal-sheet" catchtap="">
+    <view class="modal-sheet" catchtap="noop">
 
       <view class="modal-handle"></view>
 
