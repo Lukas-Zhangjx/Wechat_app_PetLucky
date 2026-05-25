@@ -1,5 +1,3 @@
-const { getTodaySign } = require('../../utils/fortune');
-
 const PET_SHORTCUTS = [
   { id: 'dog',    name: '狗狗', method: '鼻纹算命', emoji: '🐶' },
   { id: 'cat',    name: '猫咪', method: '肉垫占卜', emoji: '🐱' },
@@ -9,17 +7,38 @@ const PET_SHORTCUTS = [
 
 Page({
   data: {
-    todaySign: '',
+    signDrawn: false,       // 今日是否已求签
+    todaySign: '',          // 签文
+    todaySignGrade: '',     // 等级：大吉 / 吉 / 小吉
+    gradeClass: '',         // badge class
     petShortcuts: PET_SHORTCUTS,
     showWelcome: true,
   },
 
   onLoad() {
-    this.setData({ todaySign: getTodaySign() });
     setTimeout(() => this.setData({ showWelcome: false }), 1800);
-
-    // 热重载后字体注册会丢失，页面级重新注册一次
     getApp().loadFont();
+  },
+
+  // onShow 每次切回首页都刷新签文状态（含从灵签页抽完签返回的情况）
+  onShow() {
+    this._loadTodaySign();
+  },
+
+  /** 读取今日签文（与 fortune-sign 页共享同一 localStorage key） */
+  _loadTodaySign() {
+    const d = new Date();
+    const dateStr = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    try {
+      const saved = wx.getStorageSync('daily_sign');
+      if (saved && saved.date === dateStr && saved.text) {
+        const grade = saved.grade || '吉';
+        const gradeClass = grade === '大吉' ? 'grade--daji' : grade === '吉' ? 'grade--ji' : 'grade--xiaoji';
+        this.setData({ signDrawn: true, todaySign: saved.text, todaySignGrade: grade, gradeClass });
+        return;
+      }
+    } catch (e) { /* ignore */ }
+    this.setData({ signDrawn: false, todaySign: '', todaySignGrade: '', gradeClass: '' });
   },
 
   onStartFortune() {

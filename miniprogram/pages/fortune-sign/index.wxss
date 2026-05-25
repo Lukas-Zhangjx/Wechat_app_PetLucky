@@ -1,75 +1,313 @@
-.today-section {
-  padding: 48rpx 40rpx 32rpx;
-  text-align: center;
-  background: linear-gradient(160deg, #FFF8EE 0%, #F3E6FF 100%);
-}
-.moon-deco { font-size: 32rpx; letter-spacing: 16rpx; opacity: 0.6; margin-bottom: 16rpx; }
-.today-label {
-  display: block;
-  font-size: 44rpx;
-  font-weight: bold;
-  color: var(--color-text);
-  font-family: var(--font-title);
-  margin-bottom: 32rpx;
-}
+/* ============================================
+   今日灵签页样式
+   ============================================ */
 
-.sign-display {
-  background: var(--color-card-bg);
-  border-radius: 28rpx;
-  border: 2rpx solid var(--color-secondary);
-  padding: 40rpx 32rpx;
-  box-shadow: 0 8rpx 32rpx rgba(200, 162, 212, 0.2);
-  min-height: 200rpx;
+.sign-page {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #FFF8EE 0%, #F3E6FF 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 16rpx;
+  padding: 60rpx 40rpx 100rpx;
+  box-sizing: border-box;
 }
-.sign-display--shake { animation: shake 0.6s ease; }
-.sign-scroll-icon { font-size: 60rpx; }
-.sign-main-text { font-size: 32rpx; color: var(--color-text); line-height: 1.8; text-align: center; }
-.sign-tap-hint { font-size: 22rpx; color: var(--color-text-sub); margin-top: 8rpx; }
 
-.sign-meta { margin-top: 20rpx; }
-.sign-meta-text { font-size: 24rpx; color: var(--color-text-sub); }
-
-.list-section { padding: 32rpx 40rpx 0; }
-.list-title {
+/* ---- 顶部标题区 ---- */
+.sign-header {
+  text-align: center;
+  margin-bottom: 64rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14rpx;
+}
+.header-deco {
+  font-size: 30rpx;
+  letter-spacing: 18rpx;
+  opacity: 0.55;
+}
+.header-title {
   display: block;
-  font-size: 32rpx;
+  font-size: 56rpx;
   font-weight: bold;
   color: var(--color-text);
-  margin-bottom: 20rpx;
+  font-family: var(--font-title);
+  letter-spacing: 10rpx;
+}
+.header-sub {
+  font-size: 24rpx;
+  color: var(--color-text-sub);
+  letter-spacing: 3rpx;
 }
 
-.sign-item {
-  padding: 24rpx 20rpx;
-  border-bottom: 2rpx solid var(--color-border);
+/* ---- 主卡通用 ---- */
+.sign-main-card {
+  width: 100%;
+  border-radius: 40rpx;
+  padding: 60rpx 44rpx 56rpx;
   display: flex;
-  align-items: flex-start;
-  gap: 16rpx;
+  flex-direction: column;
+  align-items: center;
+  gap: 32rpx;
+  box-shadow: 0 16rpx 56rpx rgba(180, 120, 60, 0.10);
 }
-.sign-item--today {
-  background: linear-gradient(90deg, #FFF3E0, transparent);
-  border-radius: 16rpx;
-  border-color: var(--color-primary);
-}
-.sign-num-wrap { display: flex; align-items: center; gap: 8rpx; flex-shrink: 0; }
-.sign-num { font-size: 22rpx; color: var(--color-text-sub); }
-.today-tag {
-  font-size: 20rpx;
-  color: #fff;
-  background: var(--color-primary);
-  padding: 2rpx 10rpx;
-  border-radius: 10rpx;
-}
-.sign-item-text { font-size: 26rpx; color: var(--color-text); line-height: 1.7; flex: 1; }
 
-@keyframes shake {
-  0%, 100% { transform: rotate(0); }
-  20% { transform: rotate(-3deg) scale(1.02); }
-  40% { transform: rotate(3deg) scale(1.04); }
-  60% { transform: rotate(-2deg) scale(1.02); }
-  80% { transform: rotate(2deg); }
+/* 未求签：暖奶油色 */
+.sign-main-card--unseen {
+  background: linear-gradient(160deg, #FFFDF6 0%, #FFF5E0 100%);
+  border: 2rpx solid rgba(245, 166, 35, 0.30);
+}
+
+/* 大吉：金色渐变 */
+.sign-main-card--daji {
+  background: linear-gradient(160deg, #FFFBEC 0%, #FFF3C0 50%, #FFE990 100%);
+  border: 2rpx solid #F5C842;
+  box-shadow: 0 16rpx 56rpx rgba(245, 166, 35, 0.22);
+}
+
+/* 吉：暖橙 */
+.sign-main-card--ji {
+  background: linear-gradient(160deg, #FFF9F2 0%, #FFF0DC 100%);
+  border: 2rpx solid rgba(245, 166, 35, 0.40);
+  box-shadow: 0 16rpx 48rpx rgba(245, 150, 60, 0.12);
+}
+
+/* 小吉：薄荷绿 */
+.sign-main-card--xiaoji {
+  background: linear-gradient(160deg, #F2FFF8 0%, #DFFAED 100%);
+  border: 2rpx solid rgba(80, 180, 130, 0.35);
+  box-shadow: 0 16rpx 48rpx rgba(80, 180, 130, 0.10);
+}
+
+/* ---- 未求签：签筒 ---- */
+.stick-scene {
+  position: relative;
+  width: 140rpx;
+  height: 216rpx;
+}
+.stick-scene--shaking {
+  animation: jarShake 0.22s ease-in-out infinite;
+}
+
+/* 底部光晕 */
+.jar-glow {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130rpx;
+  height: 130rpx;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 166, 35, 0.22), transparent 70%);
+  animation: glowPulse 2.4s ease-in-out infinite;
+  z-index: 0;
+}
+
+/* 签棒层（在签筒遮罩后方，仅顶部露出） */
+.sticks-layer {
+  position: absolute;
+  bottom: 28rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92rpx;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  z-index: 1;
+}
+.stick {
+  width: 11rpx;
+  border-radius: 6rpx 6rpx 2rpx 2rpx;
+  background: linear-gradient(to right, #F2D472 0%, #C89020 50%, #9A6010 100%);
+  box-shadow: 1rpx 0 4rpx rgba(100, 60, 0, 0.22);
+}
+.stk-1 { height: 148rpx; transform: rotate(-8deg);  }
+.stk-2 { height: 122rpx; transform: rotate(-1deg);  }
+.stk-3 { height: 158rpx; transform: rotate(5deg);   }
+.stk-4 { height: 134rpx; transform: rotate(-5deg);  }
+.stk-5 { height: 150rpx; transform: rotate(7deg);   }
+.stk-6 { height: 120rpx; transform: rotate(-4deg);  }
+.stk-7 { height: 142rpx; transform: rotate(3deg);   }
+
+/* 签筒主体（z-index 高于签棒，遮住签棒下半截） */
+.stick-jar {
+  position: absolute;
+  bottom: 14rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 106rpx;
+  height: 108rpx;
+  background: linear-gradient(155deg, #E09820 0%, #B07018 40%, #8A4E0E 100%);
+  border-radius: 10rpx 10rpx 20rpx 20rpx;
+  z-index: 2;
+  box-shadow:
+    inset -12rpx 0 24rpx rgba(0, 0, 0, 0.18),
+    inset 6rpx 0 14rpx rgba(255, 220, 100, 0.10),
+    0 8rpx 28rpx rgba(120, 70, 10, 0.35);
+}
+/* 木纹横纹 */
+.stick-jar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0, transparent 13rpx,
+    rgba(0, 0, 0, 0.045) 13rpx, rgba(0, 0, 0, 0.045) 14rpx
+  );
+  border-radius: inherit;
+}
+/* 签筒口沿 */
+.jar-top-rim {
+  position: absolute;
+  top: -9rpx;
+  left: -6rpx;
+  right: -6rpx;
+  height: 18rpx;
+  background: linear-gradient(to bottom, #F2C030, #C88018);
+  border-radius: 9rpx;
+  box-shadow: 0 3rpx 10rpx rgba(160, 90, 10, 0.30);
+}
+
+/* ---- 未求签：文字 ---- */
+.unseen-title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: var(--color-text);
+  font-family: var(--font-title);
+  letter-spacing: 4rpx;
+}
+.unseen-hint {
+  font-size: 26rpx;
+  color: var(--color-text-sub);
+  text-align: center;
+  line-height: 1.8;
+}
+
+/* ---- 求签按钮 ---- */
+.draw-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10rpx;
+  margin-top: 8rpx;
+  padding: 36rpx 88rpx;
+  background: linear-gradient(135deg, #F5A623, #E07A1A);
+  border-radius: 60rpx;
+  box-shadow: 0 10rpx 36rpx rgba(245, 166, 35, 0.40);
+}
+.draw-btn--loading {
+  background: linear-gradient(135deg, #C8AAED, #9B72D4);
+  box-shadow: 0 10rpx 36rpx rgba(184, 158, 212, 0.45);
+}
+.draw-btn-icon { font-size: 54rpx; }
+.draw-btn-text {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #fff;
+  letter-spacing: 8rpx;
+}
+
+/* ---- 已求签：等级 badge ---- */
+.grade-badge-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12rpx;
+}
+.grade-badge {
+  padding: 10rpx 48rpx;
+  border-radius: 32rpx;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+/* 大吉：金色 */
+.grade--daji {
+  background: linear-gradient(135deg, #FFD060, #F5A623, #FF8C69);
+  box-shadow: 0 6rpx 24rpx rgba(245, 166, 35, 0.55);
+}
+/* 吉：橙色 */
+.grade--ji {
+  background: linear-gradient(135deg, #FFBB55, #E8792A);
+  box-shadow: 0 6rpx 20rpx rgba(232, 121, 42, 0.40);
+}
+/* 小吉：薄荷绿 */
+.grade--xiaoji {
+  background: linear-gradient(135deg, #6ECFA8, #3EAF7C);
+  box-shadow: 0 6rpx 20rpx rgba(62, 175, 124, 0.35);
+}
+.grade-text {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #fff;
+  letter-spacing: 6rpx;
+  font-family: var(--font-title);
+}
+.grade-hint {
+  font-size: 26rpx;
+  color: var(--color-text-sub);
+}
+
+.revealed-scroll { font-size: 76rpx; }
+
+/* ---- 已求签：签文区 ---- */
+.sign-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28rpx;
+  padding: 40rpx 36rpx;
+  background: rgba(255, 255, 255, 0.65);
+  border-radius: 28rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+.sign-inner--shake {
+  animation: signShake 0.7s ease;
+}
+.revealed-text {
+  font-size: 34rpx;
+  font-weight: 500;
+  color: var(--color-text);
+  text-align: center;
+  line-height: 2.0;
+  letter-spacing: 1rpx;
+}
+.revealed-hint {
+  font-size: 22rpx;
+  color: var(--color-text-sub);
+  opacity: 0.7;
+}
+
+/* ---- 底部说明 ---- */
+.sign-footer {
+  margin-top: 48rpx;
+  text-align: center;
+}
+.footer-text {
+  font-size: 22rpx;
+  color: var(--color-text-sub);
+  opacity: 0.5;
+  letter-spacing: 2rpx;
+}
+
+/* ---- 动画 ---- */
+@keyframes signShake {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  15%       { transform: rotate(-5deg) scale(1.06); }
+  30%       { transform: rotate(5deg) scale(1.10); }
+  45%       { transform: rotate(-4deg) scale(1.06); }
+  60%       { transform: rotate(4deg) scale(1.03); }
+  80%       { transform: rotate(-2deg) scale(1.01); }
+}
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+  50%       { opacity: 1.0; transform: translateX(-50%) scale(1.15); }
+}
+@keyframes jarShake {
+  0%, 100% { transform: rotate(0deg)    translateX(0);     }
+  20%       { transform: rotate(-10deg) translateX(-4rpx); }
+  50%       { transform: rotate(10deg)  translateX(4rpx);  }
+  80%       { transform: rotate(-7deg)  translateX(-2rpx); }
 }

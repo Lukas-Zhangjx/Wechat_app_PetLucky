@@ -89,13 +89,25 @@
     <view class="section">
       <view class="section-header">
         <text class="section-title">🌿 今日灵签</text>
-        <text class="sign-more" bindtap="onViewSign">抽一签 →</text>
+        <text class="sign-more" bindtap="onViewSign">{{signDrawn ? '查看详情' : '去求签'}} →</text>
       </view>
-      <view class="sign-card">
-        <view class="sign-content">
-          <text class="sign-label">今日签</text>
-          <text class="sign-text">{{todaySign}}</text>
+
+      <!-- 未求签 -->
+      <view class="sign-card sign-card--unseen" bindtap="onViewSign" wx:if="{{!signDrawn}}">
+        <text class="sign-unseen-icon">📜</text>
+        <view class="sign-unseen-info">
+          <text class="sign-unseen-title">今日还未求签</text>
+          <text class="sign-unseen-hint">点击前往求签，看看今天运势如何</text>
         </view>
+        <text class="sign-unseen-arrow">›</text>
+      </view>
+
+      <!-- 已求签 -->
+      <view class="sign-card sign-card--drawn" wx:else>
+        <view class="sign-grade-badge {{gradeClass}}">
+          <text class="sign-grade-text">{{todaySignGrade}}</text>
+        </view>
+        <text class="sign-text">{{todaySign}}</text>
       </view>
     </view>
 

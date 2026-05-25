@@ -1,35 +1,75 @@
-<view class="page-container">
-  <!-- 今日签 -->
-  <view class="today-section">
-    <view class="moon-deco">🌙 ✨ 🌙</view>
-    <text class="today-label">今日灵签</text>
+<scroll-view class="page-container" scroll-y>
+  <view class="sign-page">
 
-    <view class="sign-display {{shakeAnim ? 'sign-display--shake' : ''}}" bindtap="onShake">
-      <text class="sign-scroll-icon">📜</text>
-      <text class="sign-main-text">{{todaySign}}</text>
-      <text class="sign-tap-hint">轻触签文感受能量</text>
+    <!-- 顶部标题区 -->
+    <view class="sign-header">
+      <text class="header-deco">🌙 ✨ 🌙</text>
+      <text class="header-title">今日灵签</text>
+      <text class="header-sub">每日一签 · 诚心则灵</text>
     </view>
 
-    <view class="sign-meta">
-      <text class="sign-meta-text">🌙 今日第 {{todayIndex + 1}} 签 · 每日更新</text>
-    </view>
-  </view>
+    <!-- ===== 未求签状态 ===== -->
+    <view class="sign-main-card sign-main-card--unseen" wx:if="{{!hasDrawn}}">
 
-  <!-- 所有签文列表 -->
-  <view class="list-section">
-    <text class="list-title">✨ 全部灵签</text>
-    <scroll-view scroll-y style="height:60vh;">
-      <view
-        class="sign-item {{item.isToday ? 'sign-item--today' : ''}}"
-        wx:for="{{allSigns}}"
-        wx:key="index"
-      >
-        <view class="sign-num-wrap">
-          <text class="sign-num">第{{item.index + 1}}签</text>
-          <text class="today-tag" wx:if="{{item.isToday}}">今日</text>
+      <!-- 签筒 -->
+      <view class="stick-scene {{isDrawing ? 'stick-scene--shaking' : ''}}">
+        <view class="jar-glow"></view>
+        <view class="sticks-layer">
+          <view class="stick stk-1"></view>
+          <view class="stick stk-2"></view>
+          <view class="stick stk-3"></view>
+          <view class="stick stk-4"></view>
+          <view class="stick stk-5"></view>
+          <view class="stick stk-6"></view>
+          <view class="stick stk-7"></view>
         </view>
-        <text class="sign-item-text">{{item.text}}</text>
+        <view class="stick-jar">
+          <view class="jar-top-rim"></view>
+        </view>
       </view>
-    </scroll-view>
+
+      <text class="unseen-title">今日还未求签</text>
+      <text class="unseen-hint">静心诚意，点击下方求签</text>
+
+      <view
+        class="draw-btn {{isDrawing ? 'draw-btn--loading' : ''}}"
+        bindtap="onDrawSign"
+      >
+        <text class="draw-btn-icon">{{isDrawing ? '✨' : '🪄'}}</text>
+        <text class="draw-btn-text">{{isDrawing ? '天机流转中…' : '求  签'}}</text>
+      </view>
+
+    </view>
+
+    <!-- ===== 已求签状态 ===== -->
+    <view class="sign-main-card {{cardClass}}" wx:else>
+
+      <!-- 等级 badge -->
+      <view class="grade-badge-wrap">
+        <view class="grade-badge {{gradeClass}}">
+          <text class="grade-text">{{signGrade}}</text>
+        </view>
+        <text class="grade-hint">
+          {{signGrade === '大吉' ? '🎉 今日大运！' : signGrade === '吉' ? '✨ 今日顺遂' : '🍀 平安无事'}}
+        </text>
+      </view>
+
+      <!-- 签文内容 -->
+      <view
+        class="sign-inner {{shakeAnim ? 'sign-inner--shake' : ''}}"
+        bindtap="onShake"
+      >
+        <text class="revealed-scroll">📜</text>
+        <text class="revealed-text">{{todaySign}}</text>
+        <text class="revealed-hint">轻触感受能量 · 明日更新</text>
+      </view>
+
+    </view>
+
+    <!-- 底部说明 -->
+    <view class="sign-footer">
+      <text class="footer-text">✦ 每日一签，旨在娱乐，请勿过度解读 ✦</text>
+    </view>
+
   </view>
-</view>
+</scroll-view>

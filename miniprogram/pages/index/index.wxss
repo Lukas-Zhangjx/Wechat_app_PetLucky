@@ -273,37 +273,71 @@
 
 /* ---- 今日灵签卡 ---- */
 .sign-card {
-  display: flex;
-  align-items: center;
-  background: linear-gradient(135deg, #FFF9F0, #FFF0D6);
   border-radius: 28rpx;
-  padding: 24rpx 20rpx 24rpx 28rpx;
   border: 2rpx solid var(--color-border-light);
   box-shadow: 0 4rpx 16rpx rgba(180, 120, 60, 0.09);
-  gap: 16rpx;
 }
-.sign-content {
-  flex: 1;
+
+/* 未求签 */
+.sign-card--unseen {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 28rpx 24rpx;
+  background: linear-gradient(135deg, #FFFDF6, #FFF5E0);
+  border-color: rgba(245, 166, 35, 0.25);
 }
-.sign-label {
+.sign-unseen-icon { font-size: 52rpx; flex-shrink: 0; opacity: 0.7; }
+.sign-unseen-info { flex: 1; }
+.sign-unseen-title {
   display: block;
-  font-size: 22rpx;
-  color: var(--color-primary);
+  font-size: 28rpx;
   font-weight: bold;
-  margin-bottom: 8rpx;
-  letter-spacing: 2rpx;
+  color: var(--color-text);
+  margin-bottom: 6rpx;
+}
+.sign-unseen-hint {
+  font-size: 22rpx;
+  color: var(--color-text-sub);
+  line-height: 1.6;
+}
+.sign-unseen-arrow {
+  font-size: 36rpx;
+  color: var(--color-primary);
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+/* 已求签 */
+.sign-card--drawn {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+  padding: 28rpx 28rpx 24rpx;
+  background: linear-gradient(135deg, #FFF9F0, #FFF0D6);
 }
 .sign-text {
   font-size: 27rpx;
   color: var(--color-text);
-  line-height: 1.8;
+  line-height: 1.85;
 }
-.sign-deco-img {
-  width: 110rpx;
-  height: 110rpx;
-  flex-shrink: 0;
-  border-radius: 18rpx;
-  mix-blend-mode: multiply;
+
+/* 等级 badge（与灵签页一致） */
+.sign-grade-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6rpx 28rpx;
+  border-radius: 24rpx;
+  align-self: flex-start;
+}
+.grade--daji  { background: linear-gradient(135deg, #FFD060, #F5A623, #FF8C69); box-shadow: 0 4rpx 12rpx rgba(245,166,35,0.45); }
+.grade--ji    { background: linear-gradient(135deg, #FFBB55, #E8792A); box-shadow: 0 4rpx 12rpx rgba(232,121,42,0.35); }
+.grade--xiaoji{ background: linear-gradient(135deg, #6ECFA8, #3EAF7C); box-shadow: 0 4rpx 12rpx rgba(62,175,124,0.30); }
+.sign-grade-text {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #fff;
+  letter-spacing: 4rpx;
 }
 
 /* ---- 更多功能格 ---- */
