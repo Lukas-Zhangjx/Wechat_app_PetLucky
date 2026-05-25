@@ -118,7 +118,6 @@ Page({
 
       // 卡片尺寸（px，2 倍清晰度）
       const W = 750, H = 1120;
-      const dpr = 2;
 
       const query = wx.createSelectorQuery();
       query.select('#shareCanvas').fields({ node: true, size: true }).exec((res) => {
