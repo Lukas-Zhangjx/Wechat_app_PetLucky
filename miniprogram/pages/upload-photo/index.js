@@ -32,15 +32,18 @@ Page({
     // 从上一步（性格测试页）读取已填写的宠物信息
     const petInfo = getApp().globalData.petInfo || {};
     const ageIdx = AGE_OPTIONS.indexOf(petInfo.petAge || '');
+    // 如果档案里有照片，自动预填
+    const savedPhoto = petInfo.petPhoto || '';
     this.setData({
       petType,
       fortuneMode: mode,
-      petName:   petInfo.petName   || '',
-      petGender: petInfo.petGender || '',
-      petBreed:  petInfo.petBreed  || '',
-      petColor:  petInfo.petColor  || '',
-      petAge:    petInfo.petAge    || '',
-      ageIndex:  ageIdx >= 0 ? ageIdx : 0,
+      petName:      petInfo.petName   || '',
+      petGender:    petInfo.petGender || '',
+      petBreed:     petInfo.petBreed  || '',
+      petColor:     petInfo.petColor  || '',
+      petAge:       petInfo.petAge    || '',
+      ageIndex:     ageIdx >= 0 ? ageIdx : 0,
+      imagePreview: savedPhoto,
     });
     this._checkUsage();
 

@@ -24,7 +24,9 @@
     <scroll-view scroll-x class="pets-scroll" wx:if="{{pets.length > 0}}">
       <view class="pets-row">
         <view class="pet-card" wx:for="{{pets}}" wx:key="id">
-          <text class="pet-card-emoji">{{item.emoji}}</text>
+          <!-- 有照片显示照片，否则显示 emoji -->
+          <image wx:if="{{item.petPhoto}}" class="pet-card-photo" src="{{item.petPhoto}}" mode="aspectFill"/>
+          <text wx:else class="pet-card-emoji">{{item.emoji}}</text>
           <text class="pet-card-name">{{item.petName}}</text>
           <text class="pet-card-meta">
             {{item.petBreed || item.typeName}}{{item.petColor ? ' · ' + item.petColor : ''}}
@@ -133,6 +135,24 @@
         <text class="modal-title">{{editingPetId != null ? '编辑宠物档案' : '添加宠物'}}</text>
         <view class="modal-close" bindtap="onClosePetForm">✕</view>
       </view>
+
+      <!-- 宠物照片（可选） -->
+      <view class="photo-picker-row" bindtap="onFormChoosePhoto">
+        <image
+          wx:if="{{formPhoto}}"
+          class="photo-preview"
+          src="{{formPhoto}}"
+          mode="aspectFill"
+        />
+        <view wx:else class="photo-placeholder">
+          <text class="photo-placeholder-icon">📷</text>
+          <text class="photo-placeholder-text">上传照片（可选）</text>
+        </view>
+        <view wx:if="{{formPhoto}}" class="photo-change-hint">
+          <text>点击更换</text>
+        </view>
+      </view>
+      <view class="divider"></view>
 
       <!-- 宠物类型 -->
       <view class="modal-form-row">

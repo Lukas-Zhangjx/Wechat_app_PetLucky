@@ -19,6 +19,7 @@ Page({
     formAgeIndex: 0,
     formType: 'dog',
     formTypeIndex: 0,
+    formPhoto: '',
     ageOptions: AGE_OPTIONS,
     petTypeOptions: [],
 
@@ -60,6 +61,7 @@ Page({
       formAgeIndex: 0,
       formType: PET_TYPES[0].id,
       formTypeIndex: 0,
+      formPhoto: '',
     });
   },
 
@@ -81,6 +83,7 @@ Page({
       formAgeIndex: ageIdx >= 0 ? ageIdx : 0,
       formType: pet.type || 'dog',
       formTypeIndex: typeIdx >= 0 ? typeIdx : 0,
+      formPhoto: pet.petPhoto || '',
     });
   },
 
@@ -90,6 +93,28 @@ Page({
 
   // 阻止 modal 内部点击冒泡到遮罩层
   noop() {},
+
+  // 选择宠物照片，保存到本地永久路径
+  onFormChoosePhoto() {
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['compressed'],
+      sourceType: ['album', 'camera'],
+      success: (res) => {
+        const tempPath = res.tempFilePaths[0];
+        wx.getFileSystemManager().saveFile({
+          tempFilePath: tempPath,
+          success: (saveRes) => {
+            this.setData({ formPhoto: saveRes.savedFilePath });
+          },
+          fail: () => {
+            // 保存失败时降级用临时路径（重启后失效但当次可用）
+            this.setData({ formPhoto: tempPath });
+          },
+        });
+      },
+    });
+  },
 
   // 表单字段处理
   onFormNameInput(e)    { this.setData({ formName: e.detail.value }); },
@@ -113,6 +138,7 @@ Page({
     if (!formGender) {
       wx.showToast({ title: '请选择性别', icon: 'none' }); return;
     }
+    const { formPhoto } = this.data;
     const pet = {
       ...(editingPetId != null ? { id: editingPetId } : {}),
       petName: formName.trim(),
@@ -121,6 +147,7 @@ Page({
       petColor: formColor.trim(),
       petAge: formAge,
       type: formType,
+      petPhoto: formPhoto || '',
     };
     savePet(pet);
     this.setData({ showPetForm: false });
@@ -156,6 +183,7 @@ Page({
       petBreed: pet.petBreed || '',
       petColor: pet.petColor || '',
       petAge: pet.petAge || '',
+      petPhoto: pet.petPhoto || '',
     };
     wx.navigateTo({
       url: `/pages/pet-quiz/index?type=${pet.type}&mode=destiny&skipForm=1`,
