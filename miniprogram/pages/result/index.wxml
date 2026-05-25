@@ -182,6 +182,7 @@
         {{savingImage ? '生成中…' : '📸 生成分享图'}}
       </button>
     </view>
+    <text class="result-disclaimer">✦ AI 生成内容，仅供娱乐，请勿过度解读 ✦</text>
 
   <!-- 隐藏 Canvas，用于绘制分享卡片 -->
   <canvas

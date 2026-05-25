@@ -4,7 +4,7 @@ cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
 
 const FREE_LIMIT = 5;
-const LIMIT_ENABLED = false; // 上线时改为 true
+const LIMIT_ENABLED = true;
 
 // ---- 工具 ----
 
