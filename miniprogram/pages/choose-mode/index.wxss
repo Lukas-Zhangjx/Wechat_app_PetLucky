@@ -1,0 +1,155 @@
+.page {
+  min-height: 100vh;
+  background: var(--color-bg);
+  padding: 40rpx 32rpx 60rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ---- 顶部喵仙道人 ---- */
+.master-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 48rpx;
+}
+
+.master-bubble {
+  background: #fff;
+  border: 2rpx solid var(--color-border);
+  border-radius: 24rpx;
+  padding: 20rpx 36rpx;
+  position: relative;
+  margin-bottom: 4rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.06);
+}
+.bubble-text {
+  font-size: 28rpx;
+  color: var(--color-text);
+  font-family: 'KuaiLe', sans-serif;
+}
+.bubble-tail {
+  position: absolute;
+  bottom: -28rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 28rpx;
+  color: var(--color-border);
+  line-height: 1;
+}
+
+.master-img {
+  width: 180rpx;
+  height: 180rpx;
+  margin: 12rpx 0 16rpx;
+  display: block;
+}
+.master-title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: var(--color-text);
+  font-family: 'KuaiLe', sans-serif;
+  display: block;
+  margin-bottom: 10rpx;
+}
+.master-sub {
+  font-size: 24rpx;
+  color: var(--color-text-sub);
+  display: block;
+}
+
+/* ---- 模式选择卡 ---- */
+.modes {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 28rpx;
+}
+
+.mode-card {
+  width: 100%;
+  border-radius: 32rpx;
+  overflow: hidden;
+  box-shadow: 0 8rpx 32rpx rgba(0,0,0,0.08);
+  active-opacity: 0.85;
+}
+.mode-card:active { transform: scale(0.98); }
+
+.mode-card--daily {
+  background: linear-gradient(140deg, #FFFBF0 0%, #FFF3CC 100%);
+  border: 2rpx solid #F5C842;
+}
+.mode-card--destiny {
+  background: linear-gradient(140deg, #F8F0FF 0%, #EAD8FF 100%);
+  border: 2rpx solid #C8AAED;
+}
+
+.mode-card-inner {
+  padding: 40rpx 36rpx 36rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12rpx;
+}
+
+.mode-big-emoji {
+  font-size: 72rpx;
+  display: block;
+  margin-bottom: 4rpx;
+}
+
+.mode-card-title {
+  font-size: 44rpx;
+  font-weight: bold;
+  color: var(--color-text);
+  font-family: 'KuaiLe', sans-serif;
+  display: block;
+}
+
+.mode-card-tag {
+  display: inline-block;
+  font-size: 22rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+  background: rgba(245, 166, 35, 0.18);
+  color: #B87000;
+  margin-bottom: 4rpx;
+}
+.mode-card--destiny .mode-card-tag {
+  background: rgba(184, 158, 212, 0.25);
+  color: #7A4FB0;
+}
+
+.mode-card-desc {
+  font-size: 26rpx;
+  color: var(--color-text-sub);
+  line-height: 1.8;
+  display: block;
+  white-space: pre-line;
+}
+
+.mode-card-btn {
+  margin-top: 16rpx;
+  background: linear-gradient(135deg, #FFBE45, #F5A623);
+  color: #fff;
+  font-size: 28rpx;
+  font-weight: bold;
+  padding: 18rpx 40rpx;
+  border-radius: 48rpx;
+  font-family: 'KuaiLe', sans-serif;
+  box-shadow: 0 4rpx 16rpx rgba(245, 166, 35, 0.35);
+}
+.mode-card-btn--destiny {
+  background: linear-gradient(135deg, #C8AAED, #9B72D4);
+  box-shadow: 0 4rpx 16rpx rgba(184, 158, 212, 0.40);
+}
+
+/* ---- 底部注意 ---- */
+.footer-note {
+  margin-top: 40rpx;
+  font-size: 22rpx;
+  color: var(--color-text-sub);
+  text-align: center;
+  display: block;
+}

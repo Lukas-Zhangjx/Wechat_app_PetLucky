@@ -2,8 +2,11 @@
   "pages": [
     "pages/index/index",
     "pages/select-pet/index",
+    "pages/choose-mode/index",
     "pages/upload-photo/index",
     "pages/result/index",
+    "pages/fortune-fail/index",
+    "pages/pet-quiz/index",
     "pages/fortune-sign/index",
     "pages/my/index"
   ],

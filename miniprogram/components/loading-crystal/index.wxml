@@ -1,21 +1,88 @@
-<view class="loading-talisman" wx:if="{{visible}}">
-  <view class="talisman-wrapper">
-    <!-- 黄纸符咒 -->
-    <view class="talisman-paper">
-      <view class="talisman-seal top-seal">☯</view>
-      <view class="talisman-body">
-        <text class="talisman-char char-1">符</text>
-        <text class="talisman-char char-2">命</text>
-        <text class="talisman-char char-3">运</text>
-        <text class="talisman-char char-4">算</text>
-        <text class="talisman-char char-5">定</text>
-      </view>
-      <view class="talisman-seal bottom-seal">✦</view>
+<view class="loading-overlay" wx:if="{{visible}}">
+
+  <!-- ① 阶段进度指示器 -->
+  <view class="stage-bar">
+    <view class="stage-node {{stage >= 1 ? 'stage-node--active' : ''}}">
+      <text class="stage-icon">📜</text>
+      <text class="stage-label">命格推演</text>
     </view>
-    <!-- 装饰元素 -->
-    <text class="float-deco deco-1">✨</text>
-    <text class="float-deco deco-2">⭐</text>
-    <text class="float-deco deco-3">🌙</text>
+    <view class="stage-line {{stage >= 2 ? 'stage-line--active' : ''}}"></view>
+    <view class="stage-node {{stage >= 2 ? 'stage-node--active' : ''}}">
+      <text class="stage-icon">🔮</text>
+      <text class="stage-label">命格揭晓</text>
+    </view>
+    <view class="stage-line {{stage >= 3 ? 'stage-line--active' : ''}}"></view>
+    <view class="stage-node {{stage >= 3 ? 'stage-node--active' : ''}}">
+      <text class="stage-icon">🎨</text>
+      <text class="stage-label">绘制插画</text>
+    </view>
   </view>
-  <text class="loading-text">{{currentText}}</text>
+
+  <!-- ② 主视觉区域（随阶段切换） -->
+
+  <!-- 阶段1：符咒摇摆 -->
+  <view class="visual-wrap" wx:if="{{stage === 1}}">
+    <view class="talisman-wrapper">
+      <view class="talisman-paper">
+        <view class="talisman-seal top-seal">☯</view>
+        <view class="talisman-body">
+          <text class="talisman-char char-1">符</text>
+          <text class="talisman-char char-2">命</text>
+          <text class="talisman-char char-3">运</text>
+          <text class="talisman-char char-4">算</text>
+          <text class="talisman-char char-5">定</text>
+        </view>
+        <view class="talisman-seal bottom-seal">✦</view>
+      </view>
+      <text class="float-deco deco-1">✨</text>
+      <text class="float-deco deco-2">⭐</text>
+      <text class="float-deco deco-3">🌙</text>
+    </view>
+  </view>
+
+  <!-- 阶段2：水晶球光晕 -->
+  <view class="visual-wrap" wx:if="{{stage === 2}}">
+    <view class="crystal-wrap">
+      <view class="crystal-glow"></view>
+      <view class="crystal-ball">
+        <text class="crystal-inner">🔮</text>
+        <view class="crystal-star s1">✦</view>
+        <view class="crystal-star s2">✦</view>
+        <view class="crystal-star s3">✦</view>
+        <view class="crystal-star s4">✦</view>
+      </view>
+      <view class="fortune-revealed">
+        <text class="revealed-text">命格已定</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 阶段3：画笔绘制 -->
+  <view class="visual-wrap" wx:if="{{stage === 3}}">
+    <view class="canvas-wrap">
+      <!-- 画框 -->
+      <view class="paint-frame">
+        <view class="paint-progress" style="width:{{paintProgress}}%"></view>
+        <text class="paint-emoji">{{paintEmoji}}</text>
+      </view>
+      <!-- 画笔动画 -->
+      <view class="brush-wrap">
+        <text class="brush-icon">🖌️</text>
+      </view>
+      <view class="paint-sparks">
+        <text class="spark sk1">✨</text>
+        <text class="spark sk2">⭐</text>
+        <text class="spark sk3">✦</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ③ 文字区域 -->
+  <view class="text-area">
+    <text class="stage-title-text">{{stageTitle}}</text>
+    <text class="loading-main-text">{{currentText}}</text>
+    <text class="loading-wait-hint" wx:if="{{stage === 3}}">专属插画正在生成，稍等更精彩 ✨</text>
+    <text class="loading-timer" wx:if="{{stage === 3 && elapsedSec > 10}}">已等待 {{elapsedSec}} 秒…</text>
+  </view>
+
 </view>

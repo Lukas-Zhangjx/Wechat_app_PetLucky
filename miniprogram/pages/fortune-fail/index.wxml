@@ -1,0 +1,47 @@
+<view class="fail-wrap">
+
+  <!-- 背景装饰星星 -->
+  <text class="bg-star s1">✦</text>
+  <text class="bg-star s2">✦</text>
+  <text class="bg-star s3">✿</text>
+  <text class="bg-star s4">✦</text>
+
+  <!-- 猫仙人主体 -->
+  <view class="cat-wrap">
+    <view class="cat-halo"></view>
+    <view class="cat-body">
+      <image class="cat-img" src="/images/role.png" mode="aspectFit"></image>
+    </view>
+    <!-- 愤怒小星星 -->
+    <text class="anger-star a1">💢</text>
+    <text class="anger-star a2">💢</text>
+  </view>
+
+  <!-- 标题 -->
+  <view class="title-row">
+    <text class="title-main">本仙不服！！！</text>
+  </view>
+
+  <!-- 台词气泡 -->
+  <view class="bubble">
+    <text class="bubble-text">{{currentLine}}</text>
+  </view>
+
+  <!-- 正文 -->
+  <view class="content-card">
+    <text class="content-text">本仙掐指算了七七四十九遍</text>
+    <text class="content-text">这次竟然……没算出来？！</text>
+    <view class="divider-dotted"></view>
+    <text class="content-sub">（肯定是宇宙信号太差，绝对不是本仙的问题）</text>
+  </view>
+
+  <!-- 提示 -->
+  <text class="hint-text">{{hintText}}</text>
+
+  <!-- 按钮 -->
+  <view class="btn-wrap safe-bottom">
+    <button class="btn-primary retry-btn" bindtap="onRetry">哼！再算一次！</button>
+    <button class="btn-secondary back-btn" bindtap="onBack">算了，下次再说</button>
+  </view>
+
+</view>

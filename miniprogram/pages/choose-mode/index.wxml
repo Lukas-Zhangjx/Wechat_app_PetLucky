@@ -1,0 +1,44 @@
+<view class="page">
+
+  <!-- 顶部喵仙道人区域 -->
+  <view class="master-area">
+    <view class="master-bubble">
+      <text class="bubble-text">来来来……本仙掐指一算</text>
+      <text class="bubble-tail">▼</text>
+    </view>
+    <image class="master-img" src="/images/role.png" mode="aspectFit"></image>
+    <text class="master-title">{{petEmoji}} {{petName}}，要算哪般？</text>
+    <text class="master-sub">本仙日理万机，你只能选一个</text>
+  </view>
+
+  <!-- 两个选项卡 -->
+  <view class="modes">
+
+    <!-- 今日吉凶 -->
+    <view class="mode-card mode-card--daily" bindtap="onChooseDaily">
+      <view class="mode-card-inner">
+        <text class="mode-big-emoji">🎋</text>
+        <text class="mode-card-title">今日吉凶</text>
+        <text class="mode-card-tag">日常必测</text>
+        <text class="mode-card-desc">今天零食运如何？\n铲屎官会不会对你更温柔？\n出门会踩屎吗？\n\n本仙掐指一算，今日宜忌统统给你开示！</text>
+        <view class="mode-card-btn">就算这个 →</view>
+      </view>
+    </view>
+
+    <!-- 命格解读 -->
+    <view class="mode-card mode-card--destiny" bindtap="onChooseDestiny">
+      <view class="mode-card-inner">
+        <text class="mode-big-emoji">📜</text>
+        <text class="mode-card-title">命格解读</text>
+        <text class="mode-card-tag">一生一次</text>
+        <text class="mode-card-desc">TA究竟是天命贵宠\n还是命途多舛的苦命仔？\n人生有几道坎儿要迈？\n\n本仙翻开天书，为TA批命算卦！</text>
+        <view class="mode-card-btn mode-card-btn--destiny">就算这个 →</view>
+      </view>
+    </view>
+
+  </view>
+
+  <!-- 底部小字 -->
+  <text class="footer-note">⚠️ 本仙每日限算 5 次，珍惜机会</text>
+
+</view>

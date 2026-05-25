@@ -4,7 +4,7 @@ App({
   onLaunch() {
     // 初始化云开发
     wx.cloud.init({
-      env: 'YOUR_ENV_ID',
+      env: 'cloud1-d1goyubq4d03c7f9e',
       traceUser: true,
     });
 

@@ -1,0 +1,175 @@
+<view class="quiz-wrap">
+
+  <!-- 背景装饰 -->
+  <text class="bg-star bs1">✦</text>
+  <text class="bg-star bs2">✿</text>
+  <text class="bg-star bs3">✦</text>
+
+  <!-- ===== Step 0：填写基本信息 ===== -->
+  <block wx:if="{{showForm}}">
+
+    <view class="form-header">
+      <text class="form-header-emoji">🐾</text>
+      <text class="form-header-title">先告诉本仙一些基本情况</text>
+      <text class="form-header-sub">填得越详细，命格越准（毒舌力度也越强）</text>
+    </view>
+
+    <!-- 快速加载已保存档案 -->
+    <block wx:if="{{savedPets.length > 0}}">
+      <view class="saved-pets-header">
+        <text class="saved-pets-label">✦ 检测到已绑定的宠物，一键加载：</text>
+      </view>
+      <scroll-view scroll-x class="saved-pets-scroll">
+        <view class="saved-pets-row">
+          <view
+            class="saved-pet-chip"
+            wx:for="{{savedPets}}"
+            wx:key="id"
+            data-id="{{item.id}}"
+            bindtap="onUseSavedPet"
+          >
+            <text>🐾 {{item.petName}}</text>
+          </view>
+        </view>
+      </scroll-view>
+    </block>
+
+    <view class="card form-card">
+
+      <!-- 名字 -->
+      <view class="form-row">
+        <text class="form-label">宠物名字 <text class="required">*</text></text>
+        <input
+          class="form-input"
+          placeholder="TA 叫什么？"
+          placeholder-class="input-ph"
+          value="{{petName}}"
+          bindinput="onNameInput"
+          maxlength="20"
+        />
+      </view>
+      <view class="divider"></view>
+
+      <!-- 性别 -->
+      <view class="form-row">
+        <text class="form-label">性别 <text class="required">*</text></text>
+        <view class="gender-btns">
+          <view
+            class="gender-btn {{petGender === 'male' ? 'gender-btn--active' : ''}}"
+            data-gender="male" bindtap="onGenderSelect"
+          >♂ 公</view>
+          <view
+            class="gender-btn {{petGender === 'female' ? 'gender-btn--active' : ''}}"
+            data-gender="female" bindtap="onGenderSelect"
+          >♀ 母</view>
+        </view>
+      </view>
+      <view class="divider"></view>
+
+      <!-- 品种 -->
+      <view class="form-row">
+        <text class="form-label">品种 <text class="recommend">推荐</text></text>
+        <input
+          class="form-input"
+          placeholder="品种越精确，毒舌越到位"
+          placeholder-class="input-ph"
+          value="{{petBreed}}"
+          bindinput="onBreedInput"
+          maxlength="30"
+        />
+      </view>
+      <view class="divider"></view>
+
+      <!-- 毛色 -->
+      <view class="form-row">
+        <text class="form-label">毛色 <text class="recommend">推荐</text></text>
+        <input
+          class="form-input"
+          placeholder="如：金棕色、黑白花、橘色…"
+          placeholder-class="input-ph"
+          value="{{petColor}}"
+          bindinput="onColorInput"
+          maxlength="20"
+        />
+      </view>
+      <view class="divider"></view>
+
+      <!-- 年龄 -->
+      <view class="form-row">
+        <text class="form-label">年龄 <text class="recommend">推荐</text></text>
+        <picker mode="selector" range="{{ageOptions}}" value="{{ageIndex}}" bindchange="onAgeChange">
+          <view class="picker-val">{{ageOptions[ageIndex]}} <text class="picker-arrow">›</text></view>
+        </picker>
+      </view>
+
+    </view>
+
+    <view class="form-submit safe-bottom">
+      <button class="btn-primary" bindtap="onInfoSubmit">填好了，开始性格测试 →</button>
+      <text class="form-skip" bindtap="onSkip">跳过测试，直接算命 →</text>
+    </view>
+
+  </block>
+
+  <!-- ===== Step 1：答题中 ===== -->
+  <block wx:elif="{{!finished}}">
+
+    <!-- 顶部进度 -->
+    <view class="progress-wrap">
+      <view class="progress-bar">
+        <view class="progress-fill" style="width:{{(current / questions.length) * 100}}%"></view>
+      </view>
+      <text class="progress-text">{{current + 1}} / {{questions.length}}</text>
+    </view>
+
+    <!-- 问题卡 -->
+    <view class="question-card">
+      <text class="question-emoji">{{questions[current].emoji}}</text>
+      <text class="question-text">{{questions[current].q}}</text>
+    </view>
+
+    <!-- 选项 -->
+    <view class="options-wrap">
+      <view
+        wx:for="{{questions[current].opts}}"
+        wx:key="index"
+        class="option-btn {{selected === index ? 'option-btn--selected' : ''}}"
+        data-idx="{{index}}"
+        bindtap="onSelectOption"
+      >
+        <text class="option-letter">{{['A','B','C','D'][index]}}</text>
+        <text class="option-text">{{item.text}}</text>
+      </view>
+    </view>
+
+    <!-- 跳过 -->
+    <text class="skip-text" bindtap="onSkip">跳过测试，直接算命 →</text>
+
+  </block>
+
+  <!-- ===== Step 2：答题完毕 ===== -->
+  <block wx:else>
+
+    <view class="finish-wrap">
+      <text class="finish-emoji">🔮</text>
+      <text class="finish-title">本仙已掌握关键情报！</text>
+      <text class="finish-sub">{{petName || 'TA'}}的性格已被本仙看穿七七八八……</text>
+
+      <view class="traits-wrap">
+        <view wx:for="{{answers}}" wx:key="index" wx:if="{{index < 4}}" class="trait-item">
+          <text class="trait-dot">▸</text>
+          <text class="trait-text">{{item.trait}}</text>
+        </view>
+      </view>
+
+      <text class="finish-hint">接下来上传一张照片，本仙为TA批命 ✨</text>
+
+      <view class="finish-btns safe-bottom">
+        <button class="btn-primary" bindtap="onStartFortune">上传照片，开始算命！📜</button>
+        <button class="btn-secondary" bindtap="onSkipPhoto">😾 不传照片，直接算命</button>
+      </view>
+    </view>
+
+  </block>
+
+</view>

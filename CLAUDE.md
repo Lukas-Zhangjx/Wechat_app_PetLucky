@@ -43,10 +43,10 @@ PetLucky/
 ## 分层规则（硬性约束）
 - **pages 层**：只做 UI 渲染和事件响应，不写业务逻辑
 - **禁止**在 pages 层直接调用 `wx.setStorageSync`、`wx.getStorageSync`
-- 所有存储操作 → `utils/storage.js`
+- 所有存储操作 → `utils/storage.js` 或 `utils/petProfile.js`
 - 所有 AI / 云数据库操作 → `utils/api.js` → 云函数 `aiProxy`
-- **utils 层**：纯函数，无副作用，不调用微信 API（storage.js 除外）
-- **cloudfunctions 层**：唯一可持有 `QWEN_API_KEY` 的位置
+- **utils 层**：纯函数，无副作用，不调用微信 API（storage 类除外）
+- **cloudfunctions 层**：唯一可持有 `DEEPSEEK_API_KEY` 的位置（客户端用 `utils/env.js`，已 gitignore）
 
 ## 命名规范
 - 目录：kebab-case（`loading-crystal/`）
@@ -85,43 +85,44 @@ PetLucky/
 
 ---
 
-## Git 工作流（强制执行）
+## Git 工作流
 
-### 分支规则
+### 原则
 
-**任何功能开发或 Bug 修复，都必须新建分支，禁止直接在 `main` 上提交。**
+**快速迭代，持续推送。** 当前阶段在 `main` 上直接开发和推送，随时保持远端与本地同步。
 
 ```
-main                  ← 稳定版本，只接受合并，不直接 commit
-  └── develop         ← 日常集成分支（可选，小团队可直接从 main 切）
-        ├── feature/xxx    ← 新功能
-        ├── fix/xxx        ← Bug 修复
-        └── refactor/xxx   ← 重构
+main   ← 唯一工作分支，开发即推送
 ```
+
+每完成一个功能点或修复一个 Bug，立即 commit + push，**不要攒**。这样做的好处：
+- 随时可回滚到任意一个可用状态
+- 出问题能精确定位是哪次改动引入的
+- 不存在"本地有大量未提交改动"的风险
+
+**什么时候建分支：** 如果某个功能改动极大、可能导致主流程不可用（如重写整个支付流程），才从 main 切出分支，完成后合并回来。日常功能迭代不需要。
 
 ### 标准流程
 
-**开发新功能：**
 ```bash
-git checkout main && git pull          # 从最新 main 切出
-git checkout -b feature/功能名         # 新建功能分支
-# ... 开发、提交 ...
-git checkout main
-git merge feature/功能名 --no-ff       # 合并回 main（保留分支记录）
-git branch -d feature/功能名           # 删除已合并分支
+# 每次开发完一个功能 / 修一个 Bug：
+git add <相关文件>
+git commit -m "feat(scope): 做了什么"
 git push
 ```
 
-**修复 Bug：**
-```bash
-git checkout main && git pull
-git checkout -b fix/问题描述
-# ... 修复、提交 ...
-git checkout main
-git merge fix/问题描述 --no-ff
-git branch -d fix/问题描述
-git push
-```
+### 测试要求（强制）
+
+**每次 push 之前，必须在微信开发者工具中完整跑一遍改动涉及的功能路径。**
+
+测试 Checklist：
+- [ ] 改动的页面能正常打开，无白屏/报错
+- [ ] 核心操作路径走通（如：选宠物 → 填信息 → 测试 → 上传/跳过 → 结果页）
+- [ ] 新增功能在真机预览模式下验证一次（开发者工具模拟器不等于真机）
+- [ ] 涉及本地存储的功能，清空缓存后重新测试一次
+- [ ] 控制台无新增 `Error`（`Warning` 可接受，`Error` 必须处理后再推）
+
+> **不测试就推送 = 给未来的自己挖坑。**
 
 ### Commit Message 格式（Conventional Commits）
 
@@ -158,10 +159,10 @@ feat(prompt): 新增喵仙道人对柴犬品种的差异化毒舌描述
 
 ### 提交前 Checklist
 - [ ] 无 `console.log`（`console.error` 保留）
-- [ ] 无硬编码 API Key 或敏感信息
+- [ ] 无硬编码 API Key 或敏感信息（env.js 已 gitignore，绝不提交）
 - [ ] 新函数有 JSDoc
-- [ ] 在功能分支上，而非 `main`
 - [ ] commit message 符合 Conventional Commits 格式
+- [ ] **已在开发者工具中测试，核心流程跑通无报错**
 
 ---
 

@@ -1,0 +1,309 @@
+.quiz-wrap {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #FFF5E4 0%, #FFF0D6 100%);
+  padding: 40rpx 36rpx 60rpx;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.bg-star {
+  position: absolute;
+  color: var(--color-primary, #F5A623);
+  opacity: 0.15;
+  animation: bgFloat 6s ease-in-out infinite;
+}
+.bs1 { font-size: 40rpx; top: 80rpx;  left: 30rpx; animation-delay: 0s; }
+.bs2 { font-size: 28rpx; top: 200rpx; right: 40rpx; animation-delay: -2s; }
+.bs3 { font-size: 36rpx; bottom: 300rpx; left: 60rpx; animation-delay: -4s; }
+
+/* 进度条 */
+.progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-bottom: 48rpx;
+}
+.progress-bar {
+  flex: 1;
+  height: 10rpx;
+  background: #F0E0C8;
+  border-radius: 8rpx;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #F5A623, #FFD060);
+  border-radius: 8rpx;
+  transition: width 0.4s ease;
+}
+.progress-text {
+  font-size: 24rpx;
+  color: var(--color-text-sub, #8B6F5E);
+  white-space: nowrap;
+}
+
+/* 问题卡 */
+.question-card {
+  background: #fff;
+  border-radius: 28rpx;
+  padding: 48rpx 36rpx 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20rpx;
+  box-shadow: 0 6rpx 24rpx rgba(180,120,60,.10);
+  margin-bottom: 36rpx;
+}
+.question-emoji {
+  font-size: 72rpx;
+}
+.question-text {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: var(--color-text, #3A2A1A);
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* 选项 */
+.options-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  margin-bottom: 40rpx;
+}
+.option-btn {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  background: #fff;
+  border: 3rpx solid #F0E0C8;
+  border-radius: 20rpx;
+  padding: 28rpx 28rpx;
+  transition: all 0.2s;
+  box-shadow: 0 3rpx 12rpx rgba(180,120,60,.07);
+}
+.option-btn--selected {
+  border-color: var(--color-primary, #F5A623);
+  background: linear-gradient(135deg, #FFF9F0, #FFF3DC);
+  box-shadow: 0 4rpx 16rpx rgba(245,166,35,.20);
+  transform: scale(0.98);
+}
+.option-letter {
+  width: 52rpx;
+  height: 52rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FFD060, #F5A623);
+  color: #fff;
+  font-size: 26rpx;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.option-btn--selected .option-letter {
+  background: linear-gradient(135deg, #F5A623, #E8842A);
+}
+.option-text {
+  font-size: 28rpx;
+  color: var(--color-text, #3A2A1A);
+  line-height: 1.5;
+  flex: 1;
+}
+
+/* 跳过 */
+.skip-text {
+  text-align: center;
+  font-size: 24rpx;
+  color: #C8B8A0;
+  text-decoration: underline;
+}
+
+/* 完成页 */
+.finish-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20rpx;
+  padding-top: 40rpx;
+}
+.finish-emoji { font-size: 96rpx; animation: floatBounce 2s ease-in-out infinite; }
+.finish-title {
+  font-size: 44rpx;
+  font-weight: bold;
+  color: var(--color-text, #3A2A1A);
+  font-family: var(--font-title, sans-serif);
+}
+.finish-sub {
+  font-size: 28rpx;
+  color: var(--color-text-sub, #8B6F5E);
+  text-align: center;
+}
+.traits-wrap {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 32rpx 36rpx;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(180,120,60,.08);
+  margin: 8rpx 0;
+}
+.trait-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12rpx;
+}
+.trait-dot { color: var(--color-primary, #F5A623); font-size: 28rpx; flex-shrink: 0; }
+.trait-text { font-size: 27rpx; color: var(--color-text, #3A2A1A); line-height: 1.6; }
+.finish-hint {
+  font-size: 26rpx;
+  color: #B89ED4;
+  text-align: center;
+  line-height: 1.6;
+}
+.finish-btns {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  margin-top: 12rpx;
+}
+
+@keyframes bgFloat {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-16rpx); }
+}
+@keyframes floatBounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-14rpx); }
+}
+
+/* =============================================
+   Step 0 — 基本信息表单
+   ============================================= */
+.form-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12rpx;
+  margin-bottom: 32rpx;
+  padding-top: 8rpx;
+}
+.form-header-emoji { font-size: 72rpx; }
+.form-header-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: var(--color-text);
+  font-family: var(--font-title);
+}
+.form-header-sub {
+  font-size: 24rpx;
+  color: var(--color-text-sub);
+  text-align: center;
+}
+
+.form-card { padding: 0; overflow: hidden; }
+
+.form-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28rpx 32rpx;
+  min-height: 88rpx;
+}
+.form-label {
+  font-size: 28rpx;
+  color: var(--color-text);
+  font-weight: 500;
+  flex-shrink: 0;
+  margin-right: 20rpx;
+}
+.required  { color: var(--color-error); font-size: 24rpx; }
+.recommend { font-size: 20rpx; color: var(--color-primary); margin-left: 4rpx; }
+
+.form-input {
+  flex: 1;
+  font-size: 26rpx;
+  color: var(--color-text);
+  text-align: right;
+}
+.input-ph { font-size: 24rpx; color: #C8B8AA; }
+
+.gender-btns { display: flex; gap: 16rpx; }
+.gender-btn {
+  padding: 10rpx 28rpx;
+  border-radius: 20rpx;
+  font-size: 26rpx;
+  color: var(--color-text-sub);
+  border: 2rpx solid var(--color-border);
+  background: var(--color-bg);
+}
+.gender-btn--active {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+
+.picker-val {
+  font-size: 26rpx;
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+.picker-arrow { color: var(--color-text-sub); font-size: 32rpx; }
+
+.form-submit {
+  margin-top: 32rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24rpx;
+}
+.form-skip {
+  font-size: 24rpx;
+  color: #C8B8A0;
+  text-decoration: underline;
+  text-align: center;
+}
+
+/* 已保存宠物快速加载 */
+.saved-pets-header {
+  margin-bottom: 14rpx;
+}
+.saved-pets-label {
+  font-size: 22rpx;
+  color: #B89ED4;
+  font-weight: 500;
+}
+.saved-pets-scroll {
+  width: 100%;
+  margin-bottom: 24rpx;
+}
+.saved-pets-row {
+  display: inline-flex;
+  gap: 16rpx;
+  padding-bottom: 4rpx;
+}
+.saved-pet-chip {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg, #F4EEFF, #E8D8FF);
+  border: 2rpx solid #C8AAED;
+  border-radius: 40rpx;
+  padding: 12rpx 28rpx;
+  font-size: 26rpx;
+  color: #7A4FB0;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.saved-pet-chip:active {
+  background: linear-gradient(135deg, #E8D8FF, #D8BFFF);
+  transform: scale(0.96);
+}

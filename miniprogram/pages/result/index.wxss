@@ -92,13 +92,60 @@
   color: var(--color-text-sub);
 }
 
-/* 宠物法师插画 */
+/* 宠物头像容器 */
+.pet-avatar-wrap {
+  position: relative;
+  width: 260rpx;
+  height: 260rpx;
+  margin: 12rpx auto 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 光晕底层 */
+.pet-avatar-glow {
+  position: absolute;
+  width: 240rpx;
+  height: 240rpx;
+  border-radius: 50%;
+  opacity: 0.35;
+  filter: blur(20rpx);
+}
+.badge--ssr--glow { background: radial-gradient(circle, #FFD060, #F5A623); }
+.badge--sr--glow  { background: radial-gradient(circle, #C8AAED, #B89ED4); }
+.badge--r--glow   { background: radial-gradient(circle, #FFD8A0, #FFBE45); }
+
+/* 宠物插画 */
 .pet-avatar-img {
-  width: 320rpx;
-  height: 220rpx;
+  width: 240rpx;
+  height: 240rpx;
   display: block;
-  margin: 12rpx auto 20rpx;
+  position: relative;
+  z-index: 1;
   animation: heroBounce 3s ease-in-out infinite;
+}
+
+/* 浮动小星星 */
+.pet-avatar-stars {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.avatar-star {
+  position: absolute;
+  font-size: 22rpx;
+  color: var(--color-primary);
+  animation: starFloat 2.5s ease-in-out infinite;
+}
+.s1 { top: 10rpx; left: 20rpx; animation-delay: 0s; }
+.s2 { top: 20rpx; right: 10rpx; animation-delay: 0.8s; color: var(--color-secondary); }
+.s3 { bottom: 10rpx; left: 50%; animation-delay: 1.6s; }
+
+@keyframes starFloat {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.7; }
+  50% { transform: translateY(-10rpx) scale(1.2); opacity: 1; }
 }
 
 /* 命格名称（最大最醒目） */
@@ -225,6 +272,168 @@
   padding-bottom: 40rpx;
 }
 .retry-btn, .share-btn { flex: 1; font-size: 30rpx; }
+
+/* ---- 用户真实照片专属样式 ---- */
+.pet-avatar-img--generated {
+  width: 260rpx;
+  height: 260rpx;
+  border-radius: 50%;
+  box-shadow: 0 8rpx 32rpx rgba(0,0,0,0.15);
+}
+.generated-badge {
+  position: absolute;
+  bottom: -10rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #C8AAED, #B89ED4);
+  color: #fff;
+  font-size: 20rpx;
+  padding: 4rpx 18rpx;
+  border-radius: 20rpx;
+  white-space: nowrap;
+  box-shadow: 0 2rpx 8rpx rgba(184,158,212,0.45);
+}
+
+/* ---- 早中晚时辰卡 ---- */
+.timeline-card { padding: 32rpx 36rpx; }
+.timeline-item {
+  display: flex;
+  gap: 24rpx;
+  margin-bottom: 32rpx;
+  align-items: flex-start;
+}
+.timeline-item:last-child { margin-bottom: 0; }
+.timeline-dot {
+  width: 56rpx; height: 56rpx;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24rpx; font-weight: bold; color: #fff;
+  flex-shrink: 0;
+  margin-top: 4rpx;
+}
+.dot--morning  { background: linear-gradient(135deg, #FFD060, #F5A623); }
+.dot--afternoon{ background: linear-gradient(135deg, #FF9A60, #E8792A); }
+.dot--evening  { background: linear-gradient(135deg, #C8AAED, #9B72D4); }
+.timeline-content { flex: 1; }
+.timeline-label {
+  display: block;
+  font-size: 24rpx; font-weight: bold;
+  color: var(--color-text-sub);
+  margin-bottom: 8rpx;
+}
+.timeline-text {
+  display: block;
+  font-size: 28rpx;
+  color: var(--color-text);
+  line-height: 1.8;
+}
+.timing-val { color: var(--color-primary); font-size: 26rpx; }
+
+/* ---- 影视彩蛋卡 ---- */
+.pop-card {
+  background: linear-gradient(135deg, #F0F8FF, #E8F4FF);
+  border: 2rpx solid #B0D4F0;
+  padding: 32rpx 36rpx;
+}
+.pop-text {
+  display: block;
+  font-size: 28rpx;
+  color: #3A6EA8;
+  line-height: 1.8;
+}
+
+/* ---- 人生阶段卡 ---- */
+.stages-card { padding: 32rpx 36rpx; }
+.stage-item {
+  margin-bottom: 36rpx;
+  padding-bottom: 36rpx;
+  border-bottom: 2rpx dashed var(--color-border-light);
+}
+.stage-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.stage-header { margin-bottom: 12rpx; }
+.stage-period {
+  display: inline-block;
+  font-size: 22rpx;
+  background: var(--color-primary);
+  color: #fff;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+  margin-right: 12rpx;
+}
+.stage-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: var(--color-text);
+  font-family: 'KuaiLe', sans-serif;
+}
+.stage-reading {
+  display: block;
+  font-size: 27rpx;
+  color: var(--color-text);
+  line-height: 1.85;
+}
+
+/* ---- 命格解读专属样式 ---- */
+.destiny-card { padding: 32rpx 36rpx; }
+.destiny-text {
+  display: block;
+  font-size: 28rpx;
+  color: var(--color-text);
+  line-height: 1.8;
+}
+.obstacles-card { background: linear-gradient(135deg, #FFF9F0, #FFF0DC); }
+.obstacle-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16rpx;
+  margin-bottom: 20rpx;
+}
+.obstacle-dot {
+  color: #E8792A;
+  font-size: 28rpx;
+  flex-shrink: 0;
+  margin-top: 2rpx;
+}
+.obstacle-text {
+  font-size: 28rpx;
+  color: var(--color-text);
+  line-height: 1.7;
+  flex: 1;
+}
+.bond-card { background: linear-gradient(135deg, #FFF5F8, #FFE8EF); }
+.bond-text { color: #C05080; }
+
+/* ---- 算命模式选择按钮 ---- */
+.mode-btns {
+  display: flex;
+  gap: 20rpx;
+}
+.mode-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28rpx 16rpx;
+  background: #fff;
+  border: 3rpx solid var(--color-border-light);
+  border-radius: 24rpx;
+  gap: 8rpx;
+}
+.mode-btn--active {
+  border-color: var(--color-primary);
+  background: linear-gradient(135deg, #FFF9F0, #FFF3DC);
+  box-shadow: 0 4rpx 16rpx rgba(245, 166, 35, 0.20);
+}
+.mode-icon { font-size: 48rpx; }
+.mode-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: var(--color-text);
+}
+.mode-desc {
+  font-size: 22rpx;
+  color: var(--color-text-sub);
+}
 
 /* ---- 动画 ---- */
 @keyframes heroBounce {

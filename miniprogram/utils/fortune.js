@@ -71,7 +71,7 @@ const PET_TYPES = [
     emoji: '🐶',
     img: '/images/pet_dog.png',
     uploadHint: '拍摄鼻子特写',
-    exampleImg: '/images/example_dog.jpg',
+    exampleImg: '/images/example_dog.png',
     cleanHint: '请保持狗子鼻子干净哦～',
     tips: {
       dos: ['鼻子居中', '清晰对焦', '光线充足'],
@@ -86,7 +86,7 @@ const PET_TYPES = [
     emoji: '🐱',
     img: '/images/pet_cat.png',
     uploadHint: '拍摄肉垫特写',
-    exampleImg: '/images/example_cat.jpg',
+    exampleImg: '/images/example_cat.png',
     cleanHint: '让猫猫的肉垫完整露出哦～',
     tips: {
       dos: ['肉垫清晰', '光线柔和', '完整露出'],
@@ -101,7 +101,7 @@ const PET_TYPES = [
     emoji: '🐰',
     img: '/images/pet_rabbit.png',
     uploadHint: '拍摄耳朵正面照',
-    exampleImg: '/images/example_rabbit.jpg',
+    exampleImg: '/images/example_rabbit.png',
     cleanHint: '让兔兔的耳朵完整直立哦～',
     tips: {
       dos: ['耳朵直立', '完整清晰', '光线明亮'],

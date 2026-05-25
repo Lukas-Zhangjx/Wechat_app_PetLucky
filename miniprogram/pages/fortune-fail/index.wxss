@@ -1,0 +1,183 @@
+.fail-wrap {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #FFF5E4 0%, #FFF0D6 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80rpx 40rpx 40rpx;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 背景散点 */
+.bg-star {
+  position: absolute;
+  color: var(--color-primary, #F5A623);
+  opacity: 0.18;
+  animation: bgFloat 6s ease-in-out infinite;
+}
+.s1 { font-size: 48rpx; top: 60rpx;  left: 40rpx;  animation-delay: 0s; }
+.s2 { font-size: 32rpx; top: 120rpx; right: 60rpx; animation-delay: -2s; }
+.s3 { font-size: 40rpx; bottom: 200rpx; left: 60rpx; animation-delay: -4s; }
+.s4 { font-size: 28rpx; bottom: 280rpx; right: 40rpx; animation-delay: -1s; }
+
+/* 猫仙人区域 */
+.cat-wrap {
+  position: relative;
+  width: 240rpx;
+  height: 240rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8rpx;
+}
+.cat-halo {
+  position: absolute;
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245,166,35,.18) 0%, transparent 70%);
+  animation: haloPulse 2s ease-in-out infinite;
+}
+.cat-body {
+  width: 220rpx;
+  height: 220rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FFF3DC, #FFE8B0);
+  border: 4rpx solid #F5C842;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 8rpx 32rpx rgba(245,166,35,.25);
+  animation: catShake 0.5s ease-in-out infinite;
+}
+.cat-img {
+  width: 200rpx;
+  height: 200rpx;
+}
+
+/* 愤怒符号 */
+.anger-star {
+  position: absolute;
+  font-size: 32rpx;
+  animation: angerPop 0.8s ease-in-out infinite alternate;
+}
+.a1 { top: 16rpx; right: 16rpx; animation-delay: 0s; }
+.a2 { top: 40rpx; left: 20rpx; animation-delay: -0.4s; }
+
+/* 标题 */
+.title-row { margin: 24rpx 0 16rpx; }
+.title-main {
+  font-size: 52rpx;
+  font-weight: bold;
+  color: var(--color-text, #3A2A1A);
+  letter-spacing: 4rpx;
+  font-family: var(--font-title, 'KuaiLe', sans-serif);
+}
+
+/* 气泡 */
+.bubble {
+  background: #fff;
+  border: 3rpx solid #F5C842;
+  border-radius: 24rpx;
+  padding: 20rpx 36rpx;
+  margin-bottom: 32rpx;
+  max-width: 560rpx;
+  position: relative;
+  box-shadow: 0 4rpx 16rpx rgba(245,166,35,.12);
+}
+.bubble::before {
+  content: '';
+  position: absolute;
+  top: -18rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 10rpx solid transparent;
+  border-bottom-color: #F5C842;
+}
+.bubble::after {
+  content: '';
+  position: absolute;
+  top: -12rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8rpx solid transparent;
+  border-bottom-color: #fff;
+}
+.bubble-text {
+  font-size: 28rpx;
+  color: #8B4513;
+  text-align: center;
+  line-height: 1.7;
+}
+
+/* 内容卡片 */
+.content-card {
+  background: #fff;
+  border-radius: 28rpx;
+  padding: 36rpx 40rpx;
+  width: 100%;
+  max-width: 600rpx;
+  box-shadow: 0 4rpx 20rpx rgba(180,120,60,.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12rpx;
+  margin-bottom: 28rpx;
+}
+.content-text {
+  font-size: 32rpx;
+  color: var(--color-text, #3A2A1A);
+  text-align: center;
+  font-weight: 500;
+}
+.divider-dotted {
+  width: 80%;
+  height: 2rpx;
+  border-top: 3rpx dashed #F0DEC0;
+  margin: 8rpx 0;
+}
+.content-sub {
+  font-size: 24rpx;
+  color: var(--color-text-sub, #8B6F5E);
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* 提示文字 */
+.hint-text {
+  font-size: 24rpx;
+  color: #B89ED4;
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+/* 按钮 */
+.btn-wrap {
+  width: 100%;
+  max-width: 600rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+.retry-btn { font-size: 32rpx; }
+.back-btn  { font-size: 30rpx; }
+
+/* 动画 */
+@keyframes bgFloat {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-16rpx); }
+}
+@keyframes haloPulse {
+  0%, 100% { transform: scale(1);   opacity: 0.6; }
+  50%       { transform: scale(1.2); opacity: 1;   }
+}
+@keyframes catShake {
+  0%, 100% { transform: rotate(-3deg); }
+  50%       { transform: rotate(3deg);  }
+}
+@keyframes angerPop {
+  from { transform: scale(0.85) translateY(0);   opacity: 0.7; }
+  to   { transform: scale(1.15) translateY(-8rpx); opacity: 1;   }
+}

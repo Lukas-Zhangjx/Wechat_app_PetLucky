@@ -7,57 +7,170 @@
       <view class="rarity-row">
         <text class="rarity-badge {{rarityClass}}">{{result.rarity}}</text>
       </view>
-      <!-- 法师宠物插画（目前固定用柴犬，后续可按宠物类型切换） -->
-      <image class="pet-avatar-img" src="/images/wizard_dog.png" mode="aspectFit"></image>
+      <!-- 宠物照片：优先显示用户上传真实照片，否则用卡哇伊插图 -->
+      <view class="pet-avatar-wrap">
+        <view class="pet-avatar-glow {{rarityClass}}--glow"></view>
+        <image
+          class="pet-avatar-img {{generatedImg ? 'pet-avatar-img--generated' : ''}}"
+          src="{{generatedImg || petImg}}"
+          mode="aspectFill"
+        ></image>
+        <view class="pet-avatar-stars" wx:if="{{!generatedImg}}">
+          <text class="avatar-star s1">✦</text>
+          <text class="avatar-star s2">✿</text>
+          <text class="avatar-star s3">✦</text>
+        </view>
+        <view class="generated-badge" wx:if="{{generatedImg}}">📸 TA的真实照片</view>
+      </view>
       <text class="fortune-type">{{result.fortune_type}}</text>
       <text class="fortune-desc">{{result.description}}</text>
       <text class="pet-name-label">✨ {{petName}} ✨</text>
     </view>
 
-    <!-- 今日运势 -->
-    <view class="card info-card">
-      <text class="card-title">📊 今日运势</text>
-      <view class="fortune-row">
-        <text class="row-label">今日运势</text>
-        <star-rating value="{{result.daily_fortune}}" size="normal"></star-rating>
-      </view>
-      <view class="fortune-row">
-        <text class="row-label">🍖 幸运零食</text>
-        <text class="row-value">{{result.lucky_snack}}</text>
-      </view>
-      <view class="fortune-row">
-        <text class="row-label">🎨 幸运颜色</text>
-        <view class="color-row">
-          <view class="color-dot" style="background:{{result.lucky_color_hex}}"></view>
-          <text class="row-value">{{result.lucky_color}}</text>
+    <!-- ===== 今日求签内容 ===== -->
+    <block wx:if="{{mode === 'daily'}}">
+
+      <!-- 今日总运 + 幸运 -->
+      <view class="card info-card">
+        <text class="card-title">📊 今日运势总览</text>
+        <view class="fortune-row">
+          <text class="row-label">综合运势</text>
+          <star-rating value="{{result.daily_fortune}}" size="normal"></star-rating>
+        </view>
+        <view class="fortune-row">
+          <text class="row-label">🍖 幸运零食</text>
+          <text class="row-value">{{result.lucky_snack}}</text>
+        </view>
+        <view class="fortune-row">
+          <text class="row-label">🎨 幸运颜色</text>
+          <view class="color-row">
+            <view class="color-dot" style="background:{{result.lucky_color_hex}}"></view>
+            <text class="row-value">{{result.lucky_color}}</text>
+          </view>
+        </view>
+        <view class="fortune-row" wx:if="{{result.lucky_timing}}">
+          <text class="row-label">⏰ 最佳时机</text>
+          <text class="row-value timing-val">{{result.lucky_timing}}</text>
         </view>
       </view>
-    </view>
 
-    <!-- 今日宜/忌 -->
-    <view class="card do-dont-card">
-      <view class="do-col">
-        <text class="do-title">✅ 今日宜</text>
-        <view wx:for="{{result.do_list}}" wx:key="*this" class="do-item">
+      <!-- 早中晚运势 -->
+      <view class="card timeline-card">
+        <text class="card-title">🕐 今日时辰运势</text>
+        <view class="timeline-item">
+          <view class="timeline-dot dot--morning">早</view>
+          <view class="timeline-content">
+            <text class="timeline-label">上午运势</text>
+            <text class="timeline-text">{{result.morning}}</text>
+          </view>
+        </view>
+        <view class="timeline-item">
+          <view class="timeline-dot dot--afternoon">午</view>
+          <view class="timeline-content">
+            <text class="timeline-label">下午运势</text>
+            <text class="timeline-text">{{result.afternoon}}</text>
+          </view>
+        </view>
+        <view class="timeline-item">
+          <view class="timeline-dot dot--evening">晚</view>
+          <view class="timeline-content">
+            <text class="timeline-label">夜间运势</text>
+            <text class="timeline-text">{{result.evening}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 影视梗 -->
+      <view class="card pop-card" wx:if="{{result.pop_culture_ref}}">
+        <text class="card-title">🎬 今日命格彩蛋</text>
+        <text class="pop-text">{{result.pop_culture_ref}}</text>
+      </view>
+
+      <!-- 今日宜/忌 -->
+      <view class="card do-dont-card">
+        <view class="do-col">
+          <text class="do-title">✅ 今日宜</text>
+          <view wx:for="{{result.do_list}}" wx:key="*this" class="do-item">
+            <text class="do-check">✓</text>
+            <text class="do-text">{{item}}</text>
+          </view>
+        </view>
+        <view class="divider-v"></view>
+        <view class="dont-col">
+          <text class="dont-title">❌ 今日忌</text>
+          <view wx:for="{{result.dont_list}}" wx:key="*this" class="dont-item">
+            <text class="dont-cross">✗</text>
+            <text class="dont-text">{{item}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 今日灵签 -->
+      <view class="card sign-result-card">
+        <text class="sign-title">📜 今日灵签</text>
+        <text class="sign-content">{{result.fortune_sign}}</text>
+      </view>
+
+    </block>
+
+    <!-- ===== 命格解读内容 ===== -->
+    <block wx:else>
+
+      <!-- 性格命理 -->
+      <view class="card destiny-card">
+        <text class="card-title">🌟 天生命理</text>
+        <text class="destiny-text">{{result.character_reading}}</text>
+      </view>
+
+      <!-- 人生阶段 -->
+      <view class="card destiny-card stages-card">
+        <text class="card-title">📖 一生命途解析</text>
+        <view wx:for="{{result.life_stages}}" wx:key="stage" class="stage-item">
+          <view class="stage-header">
+            <text class="stage-period">{{item.stage}}</text>
+            <text class="stage-title">{{item.title}}</text>
+          </view>
+          <text class="stage-reading">{{item.reading}}</text>
+        </view>
+      </view>
+
+      <!-- 影视梗 -->
+      <view class="card pop-card" wx:if="{{result.pop_culture_ref}}">
+        <text class="card-title">🎬 命格彩蛋</text>
+        <text class="pop-text">{{result.pop_culture_ref}}</text>
+      </view>
+
+      <!-- 人生坎儿 -->
+      <view class="card destiny-card obstacles-card">
+        <text class="card-title">⚡ 人生必过的坎儿</text>
+        <view wx:for="{{result.obstacles}}" wx:key="*this" class="obstacle-item">
+          <text class="obstacle-dot">▸</text>
+          <text class="obstacle-text">{{item}}</text>
+        </view>
+      </view>
+
+      <!-- 天赋优势 -->
+      <view class="card destiny-card">
+        <text class="card-title">✨ 天赋异禀</text>
+        <view wx:for="{{result.strengths}}" wx:key="*this" class="do-item">
           <text class="do-check">✓</text>
           <text class="do-text">{{item}}</text>
         </view>
       </view>
-      <view class="divider-v"></view>
-      <view class="dont-col">
-        <text class="dont-title">❌ 今日忌</text>
-        <view wx:for="{{result.dont_list}}" wx:key="*this" class="dont-item">
-          <text class="dont-cross">✗</text>
-          <text class="dont-text">{{item}}</text>
-        </view>
-      </view>
-    </view>
 
-    <!-- 今日灵签 -->
-    <view class="card sign-result-card">
-      <text class="sign-title">📜 今日灵签</text>
-      <text class="sign-content">{{result.fortune_sign}}</text>
-    </view>
+      <!-- 与主人缘分 -->
+      <view class="card destiny-card bond-card">
+        <text class="card-title">💞 与主人缘分</text>
+        <text class="destiny-text bond-text">{{result.bond_with_owner}}</text>
+      </view>
+
+      <!-- 命理总签 -->
+      <view class="card sign-result-card">
+        <text class="sign-title">📜 命理总签</text>
+        <text class="sign-content">{{result.fortune_sign}}</text>
+      </view>
+
+    </block>
 
     <!-- 操作按钮 -->
     <view class="action-btns safe-bottom">

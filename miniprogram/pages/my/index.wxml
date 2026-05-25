@@ -1,12 +1,10 @@
 <view class="page-container">
-  <!-- 顶部信息 -->
+
+  <!-- 顶部标题栏 -->
   <view class="top-bar">
-    <view class="user-section">
-      <text class="user-avatar">🐾</text>
-      <view>
-        <text class="user-label">毛孩子的命理档案</text>
-        <text class="user-sub">历史算命记录</text>
-      </view>
+    <view class="top-bar-left">
+      <text class="top-title">🐾 我的</text>
+      <text class="top-sub">宠物档案 & 算命记录</text>
     </view>
     <view class="usage-badge">
       <text class="usage-label">今日剩余</text>
@@ -15,8 +13,50 @@
     </view>
   </view>
 
+  <!-- ===== 我的宠物 section ===== -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">🐾 我的宠物</text>
+      <view class="add-btn" bindtap="onAddPet">+ 添加</view>
+    </view>
+
+    <!-- 宠物卡片横向滑动 -->
+    <scroll-view scroll-x class="pets-scroll" wx:if="{{pets.length > 0}}">
+      <view class="pets-row">
+        <view class="pet-card" wx:for="{{pets}}" wx:key="id">
+          <text class="pet-card-emoji">{{item.emoji}}</text>
+          <text class="pet-card-name">{{item.petName}}</text>
+          <text class="pet-card-meta">
+            {{item.petBreed || item.typeName}}{{item.petColor ? ' · ' + item.petColor : ''}}
+          </text>
+          <view class="pet-fortune-btn" data-id="{{item.id}}" bindtap="onStartFortuneFromPet">
+            算命 ✨
+          </view>
+          <view class="pet-card-tools">
+            <view class="pet-tool-btn" data-id="{{item.id}}" bindtap="onEditPet">✏️</view>
+            <view class="pet-tool-btn pet-tool-btn--del" data-id="{{item.id}}" bindtap="onDeletePet">🗑</view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+
+    <!-- 没有宠物时的引导 -->
+    <view class="pets-empty" wx:else bindtap="onAddPet">
+      <text class="pets-empty-icon">+</text>
+      <text class="pets-empty-text">绑定你的第一只宠物</text>
+      <text class="pets-empty-sub">算命时一键加载，再也不用重复填写</text>
+    </view>
+  </view>
+
+  <view class="section-divider"></view>
+
+  <!-- ===== 算命记录 section ===== -->
+  <view class="section-header section-header--records">
+    <text class="section-title">📜 算命记录</text>
+  </view>
+
   <!-- 有记录 -->
-  <scroll-view scroll-y style="height:80vh;" wx:if="{{records.length > 0}}">
+  <scroll-view scroll-y class="records-scroll" wx:if="{{records.length > 0}}">
     <view class="records-list">
       <view
         class="record-item card"
@@ -64,10 +104,92 @@
   </scroll-view>
 
   <!-- 无记录 -->
-  <view class="empty-state" wx:else>
+  <view class="records-empty" wx:else>
     <text class="empty-emoji">📜</text>
     <text class="empty-title">还没有算命记录</text>
     <text class="empty-sub">去给毛孩子算一卦吧～</text>
     <button class="btn-primary go-btn" bindtap="onGoFortune">开始算命 ✨</button>
   </view>
+
+  <!-- ===== 意见反馈 ===== -->
+  <view class="feedback-section">
+    <button class="feedback-btn" open-type="feedback">
+      <text class="feedback-icon">💬</text>
+      <view class="feedback-text-wrap">
+        <text class="feedback-title">意见反馈</text>
+        <text class="feedback-sub">想要新功能？有 Bug？告诉我～</text>
+      </view>
+      <text class="feedback-arrow">›</text>
+    </button>
+  </view>
+
+  <!-- ===== 添加/编辑宠物 底部弹窗 ===== -->
+  <view class="modal-overlay" wx:if="{{showPetForm}}" bindtap="onClosePetForm">
+    <view class="modal-sheet" catchtap="">
+
+      <view class="modal-handle"></view>
+
+      <view class="modal-header">
+        <text class="modal-title">{{editingPetId != null ? '编辑宠物档案' : '添加宠物'}}</text>
+        <view class="modal-close" bindtap="onClosePetForm">✕</view>
+      </view>
+
+      <!-- 宠物类型 -->
+      <view class="modal-form-row">
+        <text class="form-label">宠物类型</text>
+        <picker mode="selector" range="{{petTypeOptions}}" value="{{formTypeIndex}}" bindchange="onFormTypeChange">
+          <view class="picker-val">{{petTypeOptions[formTypeIndex]}} <text class="picker-arrow">›</text></view>
+        </picker>
+      </view>
+      <view class="divider"></view>
+
+      <!-- 名字 -->
+      <view class="modal-form-row">
+        <text class="form-label">宠物名字 <text class="required">*</text></text>
+        <input class="form-input" placeholder="TA 叫什么？" placeholder-class="input-ph"
+          value="{{formName}}" bindinput="onFormNameInput" maxlength="20"/>
+      </view>
+      <view class="divider"></view>
+
+      <!-- 性别 -->
+      <view class="modal-form-row">
+        <text class="form-label">性别 <text class="required">*</text></text>
+        <view class="gender-btns">
+          <view class="gender-btn {{formGender === 'male' ? 'gender-btn--active' : ''}}"
+            data-gender="male" bindtap="onFormGenderSelect">♂ 公</view>
+          <view class="gender-btn {{formGender === 'female' ? 'gender-btn--active' : ''}}"
+            data-gender="female" bindtap="onFormGenderSelect">♀ 母</view>
+        </view>
+      </view>
+      <view class="divider"></view>
+
+      <!-- 品种 -->
+      <view class="modal-form-row">
+        <text class="form-label">品种</text>
+        <input class="form-input" placeholder="如：柯基、英短…" placeholder-class="input-ph"
+          value="{{formBreed}}" bindinput="onFormBreedInput" maxlength="30"/>
+      </view>
+      <view class="divider"></view>
+
+      <!-- 毛色 -->
+      <view class="modal-form-row">
+        <text class="form-label">毛色</text>
+        <input class="form-input" placeholder="如：金棕色、橘白…" placeholder-class="input-ph"
+          value="{{formColor}}" bindinput="onFormColorInput" maxlength="20"/>
+      </view>
+      <view class="divider"></view>
+
+      <!-- 年龄 -->
+      <view class="modal-form-row">
+        <text class="form-label">年龄</text>
+        <picker mode="selector" range="{{ageOptions}}" value="{{formAgeIndex}}" bindchange="onFormAgeChange">
+          <view class="picker-val">{{ageOptions[formAgeIndex]}} <text class="picker-arrow">›</text></view>
+        </picker>
+      </view>
+
+      <button class="btn-primary modal-save-btn" bindtap="onSavePet">保存档案</button>
+
+    </view>
+  </view>
+
 </view>

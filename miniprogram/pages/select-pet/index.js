@@ -14,7 +14,7 @@ Page({
     const { id } = e.currentTarget.dataset;
     this.setData({ selectedId: id });
     setTimeout(() => {
-      wx.navigateTo({ url: `/pages/upload-photo/index?type=${id}` });
+      wx.navigateTo({ url: `/pages/pet-quiz/index?type=${id}&mode=destiny` });
     }, 180);
   },
 });

@@ -28,7 +28,7 @@ Page({
 
   onShortcutTap(e) {
     const { type } = e.currentTarget.dataset;
-    wx.navigateTo({ url: `/pages/upload-photo/index?type=${type}` });
+    wx.navigateTo({ url: `/pages/pet-quiz/index?type=${type}&mode=destiny` });
   },
 
   onViewSign() {
