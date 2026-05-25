@@ -175,8 +175,20 @@
     <!-- 操作按钮 -->
     <view class="action-btns safe-bottom">
       <button class="btn-secondary retry-btn" bindtap="onRetry">再测一次</button>
-      <button class="btn-primary share-btn" open-type="share">✨ 分享给好友</button>
+      <button class="btn-primary share-btn" open-type="share">💬 转发好友</button>
     </view>
+    <view class="action-btns-row2 safe-bottom">
+      <button class="btn-save-img" bindtap="onSaveShareImage" loading="{{savingImage}}">
+        {{savingImage ? '生成中…' : '📸 生成分享图'}}
+      </button>
+    </view>
+
+  <!-- 隐藏 Canvas，用于绘制分享卡片 -->
+  <canvas
+    type="2d"
+    id="shareCanvas"
+    style="position:fixed;top:-9999px;left:-9999px;width:375px;height:560px;"
+  ></canvas>
 
   </view>
 </scroll-view>

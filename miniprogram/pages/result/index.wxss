@@ -269,9 +269,25 @@
   display: flex;
   gap: 20rpx;
   padding-top: 8rpx;
-  padding-bottom: 40rpx;
+  padding-bottom: 8rpx;
 }
 .retry-btn, .share-btn { flex: 1; font-size: 30rpx; }
+
+.action-btns-row2 {
+  padding-bottom: 40rpx;
+}
+.btn-save-img {
+  width: 100%;
+  background: linear-gradient(135deg, #B89ED4, #9B72D4);
+  color: #fff;
+  font-size: 30rpx;
+  font-weight: bold;
+  border-radius: 56rpx;
+  padding: 28rpx 0;
+  text-align: center;
+  box-shadow: 0 4rpx 16rpx rgba(155,114,212,0.35);
+}
+.btn-save-img::after { border: none; }
 
 /* ---- 用户真实照片专属样式 ---- */
 .pet-avatar-img--generated {

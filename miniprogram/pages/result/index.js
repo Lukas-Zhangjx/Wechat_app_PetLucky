@@ -50,6 +50,7 @@ Page({
     petImg: '',
     generatedImg: '',   // 用户上传的真实照片
     mode: 'daily',
+    savingImage: false,
     rarityClass: 'badge--r',
     heroClass: 'fortune-hero--r',
   },
@@ -80,6 +81,201 @@ Page({
 
   onRetry() {
     wx.navigateBack();
+  },
+
+  // ───── 生成分享图并保存到相册 ─────
+  async onSaveShareImage() {
+    if (this.data.savingImage) return;
+    this.setData({ savingImage: true });
+    try {
+      const tempPath = await this._drawShareCard();
+      await wx.saveImageToPhotosAlbum({ filePath: tempPath });
+      wx.showToast({ title: '已保存到相册 🎉', icon: 'success', duration: 2000 });
+    } catch (e) {
+      if (e && (e.errMsg || '').includes('auth')) {
+        wx.showModal({
+          title: '需要相册权限',
+          content: '请在设置中开启相册写入权限',
+          confirmText: '去设置',
+          success: (r) => { if (r.confirm) wx.openSetting(); },
+        });
+      } else {
+        wx.showToast({ title: '生成失败，请重试', icon: 'none' });
+      }
+    } finally {
+      this.setData({ savingImage: false });
+    }
+  },
+
+  /** 用 2D Canvas 画分享卡片，返回临时文件路径 */
+  _drawShareCard() {
+    return new Promise((resolve, reject) => {
+      const { result, petName, petEmoji, generatedImg, petImg } = this.data;
+      const rarity  = result?.rarity || 'R';
+      const fType   = result?.fortune_type || '';
+      const desc    = result?.description  || '';
+      const photoSrc = generatedImg || petImg || '/images/pet_dog.png';
+
+      // 卡片尺寸（px，2 倍清晰度）
+      const W = 750, H = 1120;
+      const dpr = 2;
+
+      const query = wx.createSelectorQuery();
+      query.select('#shareCanvas').fields({ node: true, size: true }).exec((res) => {
+        if (!res[0] || !res[0].node) { reject(new Error('canvas not found')); return; }
+        const canvas = res[0].node;
+        canvas.width  = W;
+        canvas.height = H;
+        const ctx = canvas.getContext('2d');
+
+        // ── 背景渐变 ──
+        const RARITY_BG = {
+          SSR: ['#FFF9E0', '#FFE080'],
+          SR:  ['#F8F0FF', '#DFC8FF'],
+          R:   ['#FFF5E4', '#FFDDB8'],
+        };
+        const [c1, c2] = RARITY_BG[rarity] || RARITY_BG.R;
+        const grad = ctx.createLinearGradient(0, 0, 0, H);
+        grad.addColorStop(0, c1);
+        grad.addColorStop(1, c2);
+        ctx.fillStyle = grad;
+        ctx.roundRect ? ctx.roundRect(0, 0, W, H, 32) : ctx.fillRect(0, 0, W, H);
+        ctx.fill();
+
+        // ── 顶部 App 名 ──
+        ctx.fillStyle = '#8B6030';
+        ctx.font = `bold 38px sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.fillText('🐾 爪爪运', W / 2, 80);
+        ctx.font = `26px sans-serif`;
+        ctx.fillStyle = '#B08050';
+        ctx.fillText('宠物玄学命格解读', W / 2, 122);
+
+        // ── 稀有度 badge ──
+        const BADGE_BG = { SSR: '#F5A623', SR: '#9B72D4', R: '#8B9DAF' };
+        ctx.fillStyle = BADGE_BG[rarity] || '#8B9DAF';
+        const bw = 110, bh = 46, bx = (W - bw) / 2, by = 148;
+        this._roundRect(ctx, bx, by, bw, bh, 23);
+        ctx.fill();
+        ctx.fillStyle = '#fff';
+        ctx.font = `bold 28px sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.fillText(rarity, W / 2, by + 32);
+
+        const drawTextAndQR = () => {
+          // ── 宠物名 ──
+          ctx.fillStyle = '#3A2A1A';
+          ctx.font = `bold 52px sans-serif`;
+          ctx.textAlign = 'center';
+          ctx.fillText(`${petEmoji} ${petName}`, W / 2, 460);
+
+          // ── 命格名 ──
+          ctx.fillStyle = '#5A3A0A';
+          ctx.font = `bold 40px sans-serif`;
+          this._fillWrappedText(ctx, fType, W / 2, 530, 640, 52);
+
+          // ── 一句描述 ──
+          ctx.fillStyle = '#7A5A30';
+          ctx.font = `30px sans-serif`;
+          const descLine = desc.length > 40 ? desc.slice(0, 40) + '…' : desc;
+          this._fillWrappedText(ctx, descLine, W / 2, 650, 660, 42);
+
+          // ── 分割线 ──
+          ctx.strokeStyle = 'rgba(180,120,40,0.25)';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath(); ctx.moveTo(80, 740); ctx.lineTo(W - 80, 740); ctx.stroke();
+
+          // ── 底部 QR 码区域 ──
+          ctx.fillStyle = '#9A7040';
+          ctx.font = `26px sans-serif`;
+          ctx.textAlign = 'center';
+          ctx.fillText('扫码给你的宠物算命 👇', W / 2, 800);
+
+          // 尝试加载 QR 码
+          const qrImg = canvas.createImage();
+          qrImg.onload = () => {
+            const qrSize = 200;
+            ctx.drawImage(qrImg, (W - qrSize) / 2, 830, qrSize, qrSize);
+            ctx.fillStyle = '#B08050';
+            ctx.font = `24px sans-serif`;
+            ctx.fillText('爪爪运 · 仅供娱乐', W / 2, 1070);
+            _toFile();
+          };
+          qrImg.onerror = () => {
+            // 没有 qrcode.png 时跳过
+            ctx.fillStyle = '#C8B090';
+            ctx.font = `24px sans-serif`;
+            ctx.fillText('爪爪运 · 仅供娱乐', W / 2, 880);
+            _toFile();
+          };
+          qrImg.src = '/images/qrcode.png';
+        };
+
+        const _toFile = () => {
+          wx.canvasToTempFilePath({
+            canvas,
+            x: 0, y: 0, width: W, height: H,
+            destWidth: W, destHeight: H,
+            fileType: 'jpg',
+            quality: 0.92,
+            success: (r) => resolve(r.tempFilePath),
+            fail: reject,
+          });
+        };
+
+        // ── 宠物照片（圆形） ──
+        const img = canvas.createImage();
+        img.onload = () => {
+          const r = 140, cx = W / 2, cy = 310;
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(cx, cy, r, 0, Math.PI * 2);
+          ctx.clip();
+          ctx.drawImage(img, cx - r, cy - r, r * 2, r * 2);
+          ctx.restore();
+          // 圆形描边
+          ctx.strokeStyle = 'rgba(180,120,40,0.4)';
+          ctx.lineWidth = 6;
+          ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
+          drawTextAndQR();
+        };
+        img.onerror = () => drawTextAndQR(); // 没照片就跳过
+        img.src = photoSrc;
+      });
+    });
+  },
+
+  /** 辅助：画圆角矩形路径 */
+  _roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.arc(x + w - r, y + r, r, -Math.PI / 2, 0);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.arc(x + w - r, y + h - r, r, 0, Math.PI / 2);
+    ctx.lineTo(x + r, y + h);
+    ctx.arc(x + r, y + h - r, r, Math.PI / 2, Math.PI);
+    ctx.lineTo(x, y + r);
+    ctx.arc(x + r, y + r, r, Math.PI, -Math.PI / 2);
+    ctx.closePath();
+  },
+
+  /** 辅助：自动换行文字 */
+  _fillWrappedText(ctx, text, x, y, maxWidth, lineHeight) {
+    const chars = text.split('');
+    let line = '';
+    let curY = y;
+    chars.forEach(ch => {
+      const test = line + ch;
+      if (ctx.measureText(test).width > maxWidth && line) {
+        ctx.fillText(line, x, curY);
+        line = ch;
+        curY += lineHeight;
+      } else {
+        line = test;
+      }
+    });
+    if (line) ctx.fillText(line, x, curY);
   },
 
   onShareAppMessage() {
