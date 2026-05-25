@@ -15,6 +15,7 @@ Page({
     petBreed: '',
     petColor: '',
     petAge: '',
+    petPhoto: '',   // 从档案加载时填入，随 _savePetInfo 带到上传页
     ageOptions: AGE_OPTIONS,
     ageIndex: 0,
 
@@ -51,6 +52,7 @@ Page({
         petBreed:  info.petBreed  || '',
         petColor:  info.petColor  || '',
         petAge:    info.petAge    || '',
+        petPhoto:  info.petPhoto  || '',
         ageIndex:  ageIdx >= 0 ? ageIdx : 0,
       });
     } else {
@@ -70,6 +72,7 @@ Page({
       petBreed:  pet.petBreed  || '',
       petColor:  pet.petColor  || '',
       petAge:    pet.petAge    || '',
+      petPhoto:  pet.petPhoto  || '',   // 同时带上档案照片
       ageIndex:  ageIdx >= 0 ? ageIdx : 0,
     });
     wx.showToast({ title: `已加载 ${pet.petName} 的档案`, icon: 'success', duration: 1200 });
@@ -127,17 +130,15 @@ Page({
   },
 
   // 把填好的基本信息存到全局，上传页直接用
-  // 注意：保留已有的 petPhoto，不能覆盖（从档案进来时由 my 页设置）
   _savePetInfo() {
-    const { petName, petGender, petBreed, petColor, petAge } = this.data;
-    const existing = getApp().globalData.petInfo || {};
+    const { petName, petGender, petBreed, petColor, petAge, petPhoto } = this.data;
     getApp().globalData.petInfo = {
       petName: petName.trim(),
       petGender,
       petBreed: petBreed.trim(),
       petColor: petColor.trim(),
       petAge,
-      petPhoto: existing.petPhoto || '',
+      petPhoto: petPhoto || '',   // 从 data 取（onUseSavedPet 或 skipForm 时已写入）
     };
   },
 

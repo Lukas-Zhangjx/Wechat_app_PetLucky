@@ -46,36 +46,24 @@ const DAILY_SYSTEM = {
 
 const DAILY_USER = {
   dog: ({ petName, petAge, petGender, petBreed, petColor }) =>
-    `算命对象：${petName || '这位汪'}（狗狗，${petBreed || '品种待鉴定'}，${petColor ? petColor + '毛色' : '毛色待鉴定'}，${petGender || '性别未知'}，${petAge || '年龄谜'}）
+    `算命对象：${petName || '这位汪'}（狗狗，${petBreed || '品种待鉴定'}，${petColor ? petColor + '毛色' : '毛色待鉴定'}，${petGender === 'male' ? '公' : petGender === 'female' ? '母' : '未知'}，${petAge || '年龄谜'}）
 
-已附上鼻纹照片，请仔细观察鼻纹特征。
-
-鼻纹命理：放射状→领袖型；波浪状→艺术型；网格状→智慧型；圆环状→守护型；纹路密→情感丰富；纹路稀→沉稳内敛。
-
-请给出今日完整运势。fortune_type要搞笑，早中晚三段要有剧情感，pop_culture_ref要好笑，do_list和dont_list要具体有趣。字数要多，内容要丰富！`,
+请根据以上档案信息给出今日完整运势。fortune_type要搞笑，早中晚三段要有剧情感，pop_culture_ref要好笑，do_list和dont_list要具体有趣。字数要多，内容要丰富！`,
 
   cat: ({ petName, petAge, petGender, petBreed, petColor }) =>
-    `算命对象：${petName || '这位大人'}（猫咪，${petBreed || '高贵品种'}，${petColor ? petColor + '毛色' : '毛色待鉴定'}，${petGender || '性别未知'}，${petAge || '年龄谜'}）
+    `算命对象：${petName || '这位大人'}（猫咪，${petBreed || '高贵品种'}，${petColor ? petColor + '毛色' : '毛色待鉴定'}，${petGender === 'male' ? '公' : petGender === 'female' ? '母' : '未知'}，${petAge || '年龄谜'}）
 
-已附上肉垫照片，请观察肉垫颜色纹路。
-
-肉垫命理：全粉→温柔型；全黑→神秘型；混色→多面人格；饱满→福气深厚；纹路清晰→第六感强。
-
-请给出今日完整运势，内容要丰富搞笑，早中晚要有剧情感！`,
+请根据以上档案信息给出今日完整运势，内容要丰富搞笑，早中晚要有剧情感！`,
 
   rabbit: ({ petName, petAge, petGender, petBreed, petColor }) =>
-    `算命对象：${petName || '这位毛茸朋友'}（兔子，${petBreed || '不详'}，${petColor ? petColor + '毛色' : '毛色待鉴定'}，${petGender || '未知'}，${petAge || '年龄谜'}）
+    `算命对象：${petName || '这位毛茸朋友'}（兔子，${petBreed || '不详'}，${petColor ? petColor + '毛色' : '毛色待鉴定'}，${petGender === 'male' ? '公' : petGender === 'female' ? '母' : '未知'}，${petAge || '年龄谜'}）
 
-已附上耳朵照片。耳朵是兔族感知命运的天线。
-
-请给出今日完整运势，内容要丰富，早中晚有剧情感！`,
+请根据以上档案信息给出今日完整运势，内容要丰富，早中晚有剧情感！`,
 
   small: ({ petName, petAge, petGender, petBreed, petColor }) =>
-    `算命对象：${petName || '这位小朋友'}（${petBreed || '物种待确认'}，${petColor ? petColor + '毛色' : '毛色待鉴定'}，${petGender || '未知'}，${petAge || '年龄谜'}）
+    `算命对象：${petName || '这位小朋友'}（${petBreed || '物种待确认'}，${petColor ? petColor + '毛色' : '毛色待鉴定'}，${petGender === 'male' ? '公' : petGender === 'female' ? '母' : '未知'}，${petAge || '年龄谜'}）
 
-已附上照片，先判断物种再算命。
-
-请给出今日完整运势，根据物种特点写，内容要丰富搞笑！`,
+请根据以上档案信息给出今日完整运势，根据物种特点写，内容要丰富搞笑！`,
 };
 
 // ========== 命格解读 prompts ==========
@@ -84,7 +72,7 @@ const DESTINY_SYSTEM = {
   dog: `你是"爪爪运"小程序的毒舌算命大师——喵仙道人。修炼千年的老猫，能看穿众生一生命数。
 
 【命格解读风格要求】
-- fortune_type：搞笑古风命格名，比如"天命铲屎官恩宠收割·撒娇界扛把子型"、"鼻纹显贵·一生命运跌宕起伏但零食从未断供型"
+- fortune_type：搞笑古风命格名，比如"天命铲屎官恩宠收割·撒娇界扛把子型"
 - life_stages：把宠物一生分成4个阶段，每个阶段要有：
   * 搞笑的阶段名称（比如"懵懂萌新期·舔舔一切就是我"）
   * 具体的命运走向（100字以上，有剧情感）
@@ -120,35 +108,28 @@ const DESTINY_SYSTEM = {
 
 const DESTINY_USER = {
   dog: ({ petName, petAge, petGender, petBreed, petColor }) =>
-    `命格解读对象：${petName || '这位汪'}（狗狗，${petBreed || '品种待鉴定'}，${petColor ? petColor + '毛色' : '毛色待鉴定'}，${petGender || '未知'}，${petAge ? petAge + '岁' : '年龄谜'}）
+    `命格解读对象：${petName || '这位汪'}（狗狗，${petBreed || '品种待鉴定'}，${petColor ? petColor + '毛色' : '毛色待鉴定'}，${petGender === 'male' ? '公' : petGender === 'female' ? '母' : '未知'}，${petAge ? petAge : '年龄谜'}）
 
-已附上鼻纹照片，从鼻纹判断命格根基。
-鼻纹命理：放射状→领袖；波浪→艺术；网格→智慧；圆环→守护；纹密→情感丰富；纹稀→沉稳内敛。
-
-请给出完整一生命格解读！fortune_type要超级搞笑，life_stages每个阶段都要有具体剧情（100字以上），pop_culture_ref要好笑，obstacles要说具体是什么坎。内容越丰富越好，要让主人看了大笑又共鸣！`,
+请根据以上档案信息给出完整一生命格解读！fortune_type要超级搞笑，life_stages每个阶段都要有具体剧情（100字以上），pop_culture_ref要好笑，obstacles要说具体是什么坎。内容越丰富越好，要让主人看了大笑又共鸣！`,
 
   cat: ({ petName, petAge, petGender, petBreed, petColor }) =>
-    `命格解读对象：${petName || '这位大人'}（猫咪，${petBreed || '高贵品种'}，${petColor ? petColor + '毛色' : '毛色待鉴定'}，${petGender || '未知'}，${petAge ? petAge + '岁' : '年龄谜'}）
+    `命格解读对象：${petName || '这位大人'}（猫咪，${petBreed || '高贵品种'}，${petColor ? petColor + '毛色' : '毛色待鉴定'}，${petGender === 'male' ? '公' : petGender === 'female' ? '母' : '未知'}，${petAge ? petAge : '年龄谜'}）
 
-已附上肉垫照片。肉垫是猫族命格根源。
-
-请给出完整一生命格解读，内容丰富搞笑，life_stages每段100字以上，pop_culture_ref要好笑准确！`,
+请根据以上档案信息给出完整一生命格解读，内容丰富搞笑，life_stages每段100字以上，pop_culture_ref要好笑准确！`,
 
   rabbit: ({ petName, petAge, petGender, petBreed, petColor }) =>
-    `命格解读对象：${petName || '这位毛茸朋友'}（兔子，${petBreed || '不详'}，${petColor ? petColor + '毛色' : '毛色待鉴定'}，${petGender || '未知'}，${petAge ? petAge + '岁' : '年龄谜'}）
+    `命格解读对象：${petName || '这位毛茸朋友'}（兔子，${petBreed || '不详'}，${petColor ? petColor + '毛色' : '毛色待鉴定'}，${petGender === 'male' ? '公' : petGender === 'female' ? '母' : '未知'}，${petAge ? petAge : '年龄谜'}）
 
-已附上耳朵照片。请给出完整一生命格解读，内容丰富搞笑！`,
+请根据以上档案信息给出完整一生命格解读，内容丰富搞笑！`,
 
   small: ({ petName, petAge, petGender, petBreed, petColor }) =>
-    `命格解读对象：${petName || '这位小朋友'}（${petBreed || '物种待确认'}，${petColor ? petColor + '毛色' : '毛色待鉴定'}，${petGender || '未知'}，${petAge ? petAge + '岁' : '年龄谜'}）
+    `命格解读对象：${petName || '这位小朋友'}（${petBreed || '物种待确认'}，${petColor ? petColor + '毛色' : '毛色待鉴定'}，${petGender === 'male' ? '公' : petGender === 'female' ? '母' : '未知'}，${petAge ? petAge : '年龄谜'}）
 
-已附上照片，先判断物种再解读命格。请给出完整一生命格解读，内容丰富搞笑，越有趣越好！`,
+请根据以上档案信息给出完整一生命格解读，内容丰富搞笑，越有趣越好！`,
 };
 
 /**
- * @param {string} petType
- * @param {object} petInfo
- * @param {string} mode - 'daily' | 'destiny'
+ * @param {Array} quizAnswers
  */
 function buildQuizContext(quizAnswers) {
   if (!quizAnswers || quizAnswers.length === 0) return '';
@@ -156,6 +137,11 @@ function buildQuizContext(quizAnswers) {
   return `\n\n【性格测试结果——请重点参考这些特质生成命格】\n${lines}\n\n以上是主人对TA的性格观察，命格内容要和这些特质高度结合，越具体越好！`;
 }
 
+/**
+ * @param {string} petType
+ * @param {object} petInfo
+ * @param {string} mode - 'daily' | 'destiny'
+ */
 function buildPrompts(petType, petInfo, mode = 'daily') {
   const quizCtx = buildQuizContext(petInfo.quizAnswers);
   if (mode === 'destiny') {
