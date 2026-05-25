@@ -451,6 +451,16 @@
   color: var(--color-text-sub);
 }
 
+.result-disclaimer {
+  display: block;
+  text-align: center;
+  font-size: 22rpx;
+  color: var(--color-text-sub);
+  opacity: 0.5;
+  letter-spacing: 2rpx;
+  padding: 16rpx 0 32rpx;
+}
+
 /* ---- 动画 ---- */
 @keyframes heroBounce {
   0%, 100% { transform: translateY(0) scale(1); }
