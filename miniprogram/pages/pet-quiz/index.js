@@ -127,14 +127,17 @@ Page({
   },
 
   // 把填好的基本信息存到全局，上传页直接用
+  // 注意：保留已有的 petPhoto，不能覆盖（从档案进来时由 my 页设置）
   _savePetInfo() {
     const { petName, petGender, petBreed, petColor, petAge } = this.data;
+    const existing = getApp().globalData.petInfo || {};
     getApp().globalData.petInfo = {
       petName: petName.trim(),
       petGender,
       petBreed: petBreed.trim(),
       petColor: petColor.trim(),
       petAge,
+      petPhoto: existing.petPhoto || '',
     };
   },
 

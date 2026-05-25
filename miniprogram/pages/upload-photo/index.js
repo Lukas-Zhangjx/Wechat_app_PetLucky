@@ -135,7 +135,9 @@ Page({
   onColorInput(e) { this.setData({ petColor: e.detail.value }); },
 
   onSkipPhoto() {
-    this.setData({ imagePreview: '', imageBase64: '' });
+    // 跳过手动上传，但保留档案照片（如果有）
+    const petPhoto = getApp().globalData.petInfo?.petPhoto || '';
+    this.setData({ imagePreview: petPhoto, imageBase64: '' });
     this.onSubmit();
   },
 
