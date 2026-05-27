@@ -144,7 +144,7 @@ Page({
         ctx.fillStyle = '#8B6030';
         ctx.font = `bold 38px sans-serif`;
         ctx.textAlign = 'center';
-        ctx.fillText('🐾 爪爪运', W / 2, 80);
+        ctx.fillText('🐾 我的小宠运势', W / 2, 80);
         ctx.font = `26px sans-serif`;
         ctx.fillStyle = '#B08050';
         ctx.fillText('宠物玄学命格解读', W / 2, 122);
@@ -196,14 +196,14 @@ Page({
             ctx.drawImage(qrImg, (W - qrSize) / 2, 830, qrSize, qrSize);
             ctx.fillStyle = '#B08050';
             ctx.font = `24px sans-serif`;
-            ctx.fillText('爪爪运 · 仅供娱乐', W / 2, 1070);
+            ctx.fillText('我的小宠运势 · 仅供娱乐', W / 2, 1070);
             _toFile();
           };
           qrImg.onerror = () => {
             // 没有 qrcode.png 时跳过
             ctx.fillStyle = '#C8B090';
             ctx.font = `24px sans-serif`;
-            ctx.fillText('爪爪运 · 仅供娱乐', W / 2, 880);
+            ctx.fillText('我的小宠运势 · 仅供娱乐', W / 2, 880);
             _toFile();
           };
           qrImg.src = '/images/qrcode.png';

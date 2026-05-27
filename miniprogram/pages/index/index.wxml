@@ -28,11 +28,11 @@
         <view class="slip-divider"></view>
         <text class="slip-main-char">签</text>
         <view class="slip-divider"></view>
-        <text class="slip-brand">爪爪运</text>
+        <text class="slip-brand">小宠运势</text>
       </view>
     </view>
 
-    <text class="welcome-title">爪爪运</text>
+    <text class="welcome-title">小宠运势</text>
     <text class="welcome-sub">✨ 毛孩子的命运小秘密 ✨</text>
   </view>
 
